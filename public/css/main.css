@@ -1,0 +1,66 @@
+@import 'https://fonts.googleapis.com/css?family=Baloo+Tamma';
+
+
+#foodright {
+  display: block;
+  position: absolute;
+  top: 70px;
+  left: 40%;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;}
+
+#foodleft {
+  display: block;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 40%;
+  margin-left: auto;
+  margin-right: auto;}
+
+  #arrow{
+  /*  display: inline;
+    position: relative;
+    top: 5px;
+    left: 2px;*/
+  }
+
+  #page-right {
+    cursor: pointer;
+    float: right;
+    position: relative;
+    top: 200px;
+   }
+
+.infinite{
+  -webkit-animation-iteration-count: infinite;
+}
+
+img {
+    cursor: pointer;
+  }
+
+
+h1, p, h2{
+  font-family: 'Baloo Tamma', cursive;
+  text-align: center;
+}
+
+p{
+  position: relative;
+  top: 410px;
+}
+
+h2{
+  position: relative;
+  top: 460px;
+}
+
+
+body {
+  background: #ffcf32;
+   overflow-x: hidden;
+   overflow-y: hidden;
+
+}
