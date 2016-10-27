@@ -3,57 +3,39 @@ var ReactDOM = require('react-dom');
 var List = require('./components/List.jsx');
 
 
-var Food1 = React.createClass({
 
-  getInitialState: function() {
-    return {
-      img: "../assets/img/burgerking.png"
-    }
-  },
 
-  flip: function () {
-    if(this.state.img){
-      this.setState({img: "../assets/img/dominos.png"});
-    }
-  },
+var Parent = React.createClass({
 
-  render: function() {
-      return (
-        <div>
+
+      getInitialState: function() {
+        return {
+          img1: "../assets/img/burgerking.png",
+          img2: "../assets/img/mcdonalds.png"
+        }
+      },
+
+      flip: function () {
+        if(this.state.img1){
+          this.setState({img1: "../assets/img/dominos.png",
+                         img2: "../assets/img/pizzahut.png"
+          });
+        }
+      },
+
+
+
+      render: function() {
+      return ( <div>
         <i id="page-right" onClick={this.flip} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
-        <img className="fadeInUp animated hvr-grow" src={this.state.img} id="foodleft" alt="Burger King" height="394" width="440"></img>
-        </div>
-    );
-  }
-});
+        <img className="fadeInUp animated hvr-grow" src={this.state.img1} id="foodleft" alt="Burger King" height="394" width="440"></img>
+        <img className="fadeInUp animated hvr-grow" src={this.state.img2} id="foodright" alt="Burger King" height="394" width="440"></img>
+              </div>
+      )
 
-
-
-var Food2 = React.createClass({
-
-  getInitialState: function() {
-    return {
-      img: "../assets/img/mcdonalds.png"
     }
-  },
 
-  flip: function () {
-    if(this.state.img){
-      this.setState({img: "../assets/img/pizzahut.png"});
-    }
-  },
-
-  render: function() {
-      return (
-        <div>
-        <i id="page-right" onClick={this.flip} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
-        <img className="fadeInUp animated hvr-grow" src={this.state.img} id="foodright" alt="Burger King" height="394" width="440"></img>
-        </div>
-    );
-  }
 });
-
-
 
 
 var Static = React.createClass({
@@ -71,6 +53,5 @@ var Static = React.createClass({
 
 ReactDOM.render(<div>
   <Static />
-  <Food1 />
-  <Food2 />
+  <Parent />
   </div>, document.getElementById('ingredients'));

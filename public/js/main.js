@@ -19619,19 +19619,22 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var List = require('./components/List.jsx');
 
-var Food1 = React.createClass({
-  displayName: 'Food1',
+var Parent = React.createClass({
+  displayName: 'Parent',
 
 
   getInitialState: function () {
     return {
-      img: "../assets/img/burgerking.png"
+      img1: "../assets/img/burgerking.png",
+      img2: "../assets/img/mcdonalds.png"
     };
   },
 
   flip: function () {
-    if (this.state.img) {
-      this.setState({ img: "../assets/img/dominos.png" });
+    if (this.state.img1) {
+      this.setState({ img1: "../assets/img/dominos.png",
+        img2: "../assets/img/pizzahut.png"
+      });
     }
   },
 
@@ -19640,35 +19643,11 @@ var Food1 = React.createClass({
       'div',
       null,
       React.createElement('i', { id: 'page-right', onClick: this.flip, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
-      React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' })
+      React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img1, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
+      React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img2, id: 'foodright', alt: 'Burger King', height: '394', width: '440' })
     );
   }
-});
 
-var Food2 = React.createClass({
-  displayName: 'Food2',
-
-
-  getInitialState: function () {
-    return {
-      img: "../assets/img/mcdonalds.png"
-    };
-  },
-
-  flip: function () {
-    if (this.state.img) {
-      this.setState({ img: "../assets/img/pizzahut.png" });
-    }
-  },
-
-  render: function () {
-    return React.createElement(
-      'div',
-      null,
-      React.createElement('i', { id: 'page-right', onClick: this.flip, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
-      React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img, id: 'foodright', alt: 'Burger King', height: '394', width: '440' })
-    );
-  }
 });
 
 var Static = React.createClass({
@@ -19702,8 +19681,7 @@ ReactDOM.render(React.createElement(
   'div',
   null,
   React.createElement(Static, null),
-  React.createElement(Food1, null),
-  React.createElement(Food2, null)
+  React.createElement(Parent, null)
 ), document.getElementById('ingredients'));
 
 },{"./components/List.jsx":160,"react":158,"react-dom":2}],163:[function(require,module,exports){
