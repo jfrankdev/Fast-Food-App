@@ -19560,64 +19560,23 @@ module.exports = require('./lib/React');
 
 },{}],160:[function(require,module,exports){
 var React = require('react');
-var ListItem = require('./ListItem.jsx');
-var HTTP = require('../services/httpservice');
-
-var List = React.createClass({
-    displayName: 'List',
-
-
-    getInitialState: function () {
-
-        return { ingredients: [] };
-    },
-    componentWillMount: function () {
-        HTTP.get('/ingredients').then(function (data) {
-            console.log('http get is working');
-            this.setState({ ingredients: data });
-        }.bind(this));
-    },
-    render: function () {
-
-        var listItems = this.state.ingredients.map(function (item) {
-            return React.createElement(ListItem, { key: item.id, ingredient: item.text });
-        });
-
-        return React.createElement(
-            'ul',
-            null,
-            listItems
-        );
-    }
-});
-
-module.exports = List;
-
-},{"../services/httpservice":163,"./ListItem.jsx":161,"react":158}],161:[function(require,module,exports){
-var React = require('react');
-var ListItem = React.createClass({
-    displayName: 'ListItem',
-
-    render: function () {
-
-        return React.createElement(
-            'li',
-            null,
-            React.createElement(
-                'h4',
-                null,
-                this.props.ingredient
-            )
-        );
-    }
-});
-console.log('ListItem.jsx is working');
-module.exports = ListItem;
-
-},{"react":158}],162:[function(require,module,exports){
-var React = require('react');
 var ReactDOM = require('react-dom');
-var List = require('./components/List.jsx');
+//var List = require('./components/List.jsx');
+var HTTP = require('./services/httpservice');
+
+var Results = React.createClass({
+  displayName: 'Results',
+
+
+  render: function () {
+    console.log('yo yo yo yoooo');
+    return React.createElement(
+      'span',
+      null,
+      this.props.ingredient
+    );
+  }
+});
 
 var Parent = React.createClass({
   displayName: 'Parent',
@@ -19626,8 +19585,16 @@ var Parent = React.createClass({
   getInitialState: function () {
     return {
       img1: "../assets/img/burgerking.png",
-      img2: "../assets/img/mcdonalds.png"
+      img2: "../assets/img/mcdonalds.png",
+      ingredients: []
     };
+  },
+
+  componentWillMount: function () {
+    HTTP.get('/ingredients').then(function (data) {
+      console.log('http get is working');
+      this.setState({ ingredients: data });
+    }.bind(this));
   },
 
   flip: function () {
@@ -19639,25 +19606,17 @@ var Parent = React.createClass({
   },
 
   render: function () {
+
+    var listItems = this.state.ingredients.map(function (item) {
+      return React.createElement(Results, { key: item.id, ingredient: item.text });
+    });
+
     return React.createElement(
       'div',
       null,
       React.createElement('i', { id: 'page-right', onClick: this.flip, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
       React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img1, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
-      React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img2, id: 'foodright', alt: 'Burger King', height: '394', width: '440' })
-    );
-  }
-
-});
-
-var Static = React.createClass({
-  displayName: 'Static',
-
-
-  render: function () {
-    return React.createElement(
-      'div',
-      null,
+      React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img2, id: 'foodright', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement(
         'h1',
         { className: 'fadeInUp animated' },
@@ -19671,20 +19630,22 @@ var Static = React.createClass({
       React.createElement(
         'h2',
         null,
-        'You chose McDonald\'s. 3 other voters agree with you, 2 others do not.'
+        'You chose ',
+        listItems,
+        '. 3 other voters agree with you, 2 others do not.'
       )
     );
   }
+
 });
 
 ReactDOM.render(React.createElement(
   'div',
   null,
-  React.createElement(Static, null),
   React.createElement(Parent, null)
 ), document.getElementById('ingredients'));
 
-},{"./components/List.jsx":160,"react":158,"react-dom":2}],163:[function(require,module,exports){
+},{"./services/httpservice":161,"react":158,"react-dom":2}],161:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:3000';
 
@@ -19698,4 +19659,4 @@ var service = {
 
 module.exports = service;
 
-},{"whatwg-fetch":159}]},{},[162]);
+},{"whatwg-fetch":159}]},{},[160]);
