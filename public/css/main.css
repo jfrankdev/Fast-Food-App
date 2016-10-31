@@ -33,6 +33,13 @@
     top: 200px;
    }
 
+   #page-left {
+     cursor: pointer;
+     float: left;
+     position: relative;
+     top: 200px;
+    }
+    
 .infinite{
   -webkit-animation-iteration-count: infinite;
 }
