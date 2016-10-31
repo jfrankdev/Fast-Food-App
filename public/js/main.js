@@ -19574,7 +19574,8 @@ var Results = React.createClass({
       'span',
       null,
       this.props.yes,
-      this.props.no
+      this.props.no,
+      this.props.key
     );
   }
 });
@@ -19592,7 +19593,15 @@ var Parent = React.createClass({
     };
   },
 
-  componentWillMount: function () {
+  flip: function () {
+    if (this.state.img1) {
+      this.setState({ img1: "../assets/img/dominos.png",
+        img2: "../assets/img/pizzahut.png"
+      });
+    }
+  },
+
+  call: function () {
     HTTP.get('/mcdYes').then(function (data) {
       console.log('http get is working');
       this.setState({ agree: data });
@@ -19604,29 +19613,25 @@ var Parent = React.createClass({
     }.bind(this));
   },
 
-  flip: function () {
-    if (this.state.img1) {
-      this.setState({ img1: "../assets/img/dominos.png",
-        img2: "../assets/img/pizzahut.png"
-      });
-    }
-  },
-
   render: function () {
 
-    var yes = this.state.agree.map(function (item) {
-      return React.createElement(Results, { key: item.id, yes: item.text });
+    var id = this.state.agree.map(function (item) {
+      return React.createElement(Results, { key: item.id, yes: item.id });
     });
 
     var no = this.state.disagree.map(function (item) {
       return React.createElement(Results, { key: item.id, no: item.text });
     });
 
+    var yes = this.state.agree.map(function (item) {
+      return React.createElement(Results, { key: item.id, yes: item.text });
+    });
+
     return React.createElement(
       'div',
       null,
       React.createElement('i', { id: 'page-right', onClick: this.flip, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
-      React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img1, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
+      React.createElement('img', { className: 'fadeInUp animated hvr-grow', onClick: this.call, src: this.state.img1, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement('img', { className: 'fadeInUp animated hvr-grow', src: this.state.img2, id: 'foodright', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement(
         'h1',
@@ -19641,7 +19646,9 @@ var Parent = React.createClass({
       React.createElement(
         'h2',
         null,
-        'You chose McDonalds. ',
+        'You chose ',
+        id,
+        '. ',
         yes,
         ' other voters agree with you, ',
         no,
