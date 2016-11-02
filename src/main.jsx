@@ -31,7 +31,8 @@ var Parent = React.createClass({
           img2: "../assets/img/mcdonalds.png",
           agree: [],
           disagree: [],
-          newText: ""
+          newText: "",
+          showResults: false
         }
 
       },
@@ -58,7 +59,10 @@ var Parent = React.createClass({
         break;
     default:
         console.log('hello');
-}
+};
+
+  this.setState({ showResults: true });
+
       },
 
       bkCall: function () {
@@ -123,6 +127,7 @@ var Parent = React.createClass({
         <input placeholder="add item" value={this.state.newText} onChange={this.onInputChange} />
         <button onClick={this.onClick}>Add Item</button>
         <i id="page-right" onClick={this.changeimg} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
+        { this.state.showResults ? <LeftSwipe /> : null }
         <img className="fadeInUp animated hvr-grow" onClick={this.bkCall} src={this.state.img1} id="foodleft" alt="Burger King" height="394" width="440"></img>
         <img className="fadeInUp animated hvr-grow" onClick={this.mcdCall} src={this.state.img2} id="foodright" alt="Burger King" height="394" width="440"></img>
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
@@ -135,7 +140,13 @@ var Parent = React.createClass({
 
 });
 
-
+var LeftSwipe = React.createClass({
+    render: function() {
+        return (
+<i id="page-left" onClick={this.changeimg} className="fa fa-angle-double-left fa-5x hvr-grow"></i>
+        );
+    }
+});
 
 ReactDOM.render(<div>
   <Parent />

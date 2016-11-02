@@ -20939,7 +20939,8 @@ var Parent = React.createClass({
       img2: "../assets/img/mcdonalds.png",
       agree: [],
       disagree: [],
-      newText: ""
+      newText: "",
+      showResults: false
     };
   },
 
@@ -20965,7 +20966,9 @@ var Parent = React.createClass({
         break;
       default:
         console.log('hello');
-    }
+    };
+
+    this.setState({ showResults: true });
   },
 
   bkCall: function () {
@@ -21031,6 +21034,7 @@ var Parent = React.createClass({
         'Add Item'
       ),
       React.createElement('i', { id: 'page-right', onClick: this.changeimg, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
+      this.state.showResults ? React.createElement(LeftSwipe, null) : null,
       React.createElement('img', { className: 'fadeInUp animated hvr-grow', onClick: this.bkCall, src: this.state.img1, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement('img', { className: 'fadeInUp animated hvr-grow', onClick: this.mcdCall, src: this.state.img2, id: 'foodright', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement(
@@ -21057,6 +21061,14 @@ var Parent = React.createClass({
     );
   }
 
+});
+
+var LeftSwipe = React.createClass({
+  displayName: 'LeftSwipe',
+
+  render: function () {
+    return React.createElement('i', { id: 'page-left', onClick: this.changeimg, className: 'fa fa-angle-double-left fa-5x hvr-grow' });
+  }
 });
 
 ReactDOM.render(React.createElement(
