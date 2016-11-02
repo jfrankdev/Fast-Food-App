@@ -1,7 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-//var List = require('./components/List.jsx');
-var HTTP = require('./services/httpservice');
+var Reflux = require('reflux');
+var Actions = require('./reflux/actions.jsx');
+var IngredientStore = require('./reflux/ingredients-store.jsx');
 
 
 
@@ -11,7 +12,7 @@ var Results = React.createClass({
 
 
     render: function() {
-      console.log('yo yo yo yoooo');
+      console.log('hello this is a test');
         return (<span>
           {this.props.yes}
           {this.props.no}
@@ -23,18 +24,24 @@ var Results = React.createClass({
 
 
 var Parent = React.createClass({
-
-
+      mixins: [Reflux.listenTo(IngredientStore, 'onChange')],
       getInitialState: function() {
         return {
           img1: "../assets/img/burgerking.png",
           img2: "../assets/img/mcdonalds.png",
-          img3: "",
-          img4: "",
           agree: [],
-          disagree: []
+          disagree: [],
+          newText: ""
         }
 
+      },
+
+      onChange: function(event, data) {
+        this.setState({agree: data});
+      },
+
+      onInputChange: function(e) {
+        this.setState({newText: e.target.value});
       },
 
       changeimg: function () {
@@ -57,34 +64,12 @@ var Parent = React.createClass({
       bkCall: function () {
               switch (this.state.img1) {
         case "../assets/img/burgerking.png":
-        HTTP.get('/bkYes')
-        .then(function(data){
-          console.log('http get is working');
-          this.setState({agree: data});
-        }.bind(this));
+        Actions.getIngredients();
 
-        HTTP.get('/bkNo')
-        .then(function(data){
-          console.log('http get is working');
-          this.setState({disagree: data});
-        }.bind(this));
-        break;
-        case "../assets/img/dominos.png":
-        HTTP.get('/domYes')
-        .then(function(data){
-          console.log('http get is working');
-          this.setState({agree: data});
-        }.bind(this));
-
-        HTTP.get('/domNo')
-        .then(function(data){
-          console.log('http get is working');
-          this.setState({disagree: data});
-        }.bind(this));
         break;
 
         default:
-        console.log('hello');
+        console.log('hello this is a test');
         }
       },
 
@@ -107,10 +92,17 @@ var Parent = React.createClass({
         break;
 
         default:
-        console.log('hello');
+        console.log('hello this is a test');
         }
       },
 
+      onClick: function(e) {
+        if (this.state.newText) {
+          Actions.postIngredient(this.state.newText);
+        }
+
+        this.setState({newText: ""});
+      },
 
 
       render: function() {
@@ -128,6 +120,8 @@ var Parent = React.createClass({
         });
 
       return ( <div>
+        <input placeholder="add item" value={this.state.newText} onChange={this.onInputChange} />
+        <button onClick={this.onClick}>Add Item</button>
         <i id="page-right" onClick={this.changeimg} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
         <img className="fadeInUp animated hvr-grow" onClick={this.bkCall} src={this.state.img1} id="foodleft" alt="Burger King" height="394" width="440"></img>
         <img className="fadeInUp animated hvr-grow" onClick={this.mcdCall} src={this.state.img2} id="foodright" alt="Burger King" height="394" width="440"></img>
