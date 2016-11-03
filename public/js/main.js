@@ -21081,6 +21081,13 @@ var Parent = React.createClass({
     this.setState({ newText: "" });
   },
 
+  onClickTest: function () {
+    var num = 0;
+    num++;
+    console.log(num);
+    Actions.postIngredient(num);
+  },
+
   render: function () {
 
     var id = this.state.agree.map(function (item) {
@@ -21101,7 +21108,7 @@ var Parent = React.createClass({
       React.createElement('input', { placeholder: 'add item', value: this.state.newText, onChange: this.onInputChange }),
       React.createElement(
         'button',
-        { onClick: this.onClick },
+        { onClick: this.onClickTest },
         'Add Item'
       ),
       React.createElement('i', { id: 'page-right', onClick: this.changeimg, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
@@ -21175,18 +21182,18 @@ var IngredientStore = Reflux.createStore({
       this.fireUpdate();
     }.bind(this));
   },
-  postIngredient: function (text) {
+  postIngredient: function (num) {
 
     if (!this.newText) {
       this.newText = [];
     }
 
     var ingredient = {
-      "text": text,
-      "id": Math.floor(Date.now() / 1000) + text
+      "text": num,
+      "id": Math.floor(Date.now() / 1000) + num
     };
 
-    this.newText.push(text);
+    this.newText.push(num);
     console.log('post test');
     this.fireUpdate();
 

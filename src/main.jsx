@@ -129,6 +129,12 @@ var Parent = React.createClass({
         this.setState({newText: ""});
       },
 
+      onClickTest: function() {
+        var num = 0;
+        num ++;
+        console.log(num);
+          Actions.postIngredient(num);
+      },
 
       render: function() {
 
@@ -146,7 +152,7 @@ var Parent = React.createClass({
 
       return ( <div>
         <input placeholder="add item" value={this.state.newText} onChange={this.onInputChange} />
-        <button onClick={this.onClick}>Add Item</button>
+        <button onClick={this.onClickTest}>Add Item</button>
         <i id="page-right" onClick={this.changeimg} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
           <LeftSwipe myClick={this.changeimgLeft} showArrow={this.state.showResults}/>
         <img className="fadeInUp animated hvr-grow" onClick={this.bkCall} src={this.state.img1} id="foodleft" alt="Burger King" height="394" width="440"></img>
