@@ -40,6 +40,9 @@
      top: 200px;
     }
 
+.visible{
+  visibility: hidden;
+}
 
 .infinite{
   -webkit-animation-iteration-count: infinite;
