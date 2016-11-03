@@ -20991,7 +20991,7 @@ var Parent = React.createClass({
       agree: [],
       disagree: [],
       newText: "",
-      showResults: false
+      showResults: true
     };
   },
 
@@ -21006,7 +21006,7 @@ var Parent = React.createClass({
   changeimg: function () {
     switch (this.state.img1) {
       case "../assets/img/burgerking.png":
-        this.setState({ showResults: true });
+        this.setState({ showResults: false });
         this.setState({ img1: "../assets/img/dominos.png",
           img2: "../assets/img/pizzahut.png"
         });
@@ -21026,7 +21026,7 @@ var Parent = React.createClass({
       case "../assets/img/burgerking.png":
         break;
       case "../assets/img/dominos.png":
-        this.setState({ showResults: null });
+        this.setState({ showResults: true });
         this.setState({ img1: "../assets/img/burgerking.png",
           img2: "../assets/img/mcdonalds.png"
         });
@@ -21105,7 +21105,7 @@ var Parent = React.createClass({
         'Add Item'
       ),
       React.createElement('i', { id: 'page-right', onClick: this.changeimg, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
-      this.state.showResults ? React.createElement(LeftSwipe, { myClick: this.changeimgLeft }) : null,
+      React.createElement(LeftSwipe, { myClick: this.changeimgLeft, showArrow: this.state.showResults }),
       React.createElement('img', { className: 'fadeInUp animated hvr-grow', onClick: this.bkCall, src: this.state.img1, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement('img', { className: 'fadeInUp animated hvr-grow', onClick: this.mcdCall, src: this.state.img2, id: 'foodright', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement(
@@ -21139,7 +21139,7 @@ var LeftSwipe = React.createClass({
 
   render: function () {
     var swipeClasses = classNames({
-      'visible': true,
+      'invisible': this.props.showArrow,
       'fa': true,
       'fa-angle-double-left': true,
       'fa-5x': true,
