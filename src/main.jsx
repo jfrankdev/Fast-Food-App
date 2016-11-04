@@ -27,11 +27,15 @@ var Parent = React.createClass({
       mixins: [Reflux.listenTo(IngredientStore, 'onChange')],
       getInitialState: function() {
         return {
-          img1: "../assets/img/burgerking.png",
-          img2: "../assets/img/mcdonalds.png",
+          //img1: "../assets/img/burgerking.png",
+          //img2: "../assets/img/mcdonalds.png",
           agree: [],
           disagree: [],
-          showResults: true
+          hideLeftArrow: true,
+          invisible: true,
+          showImg1: true,
+          showImg2: false,
+          showImg3: false
         }
 
       },
@@ -41,58 +45,34 @@ var Parent = React.createClass({
       },
 
 
-      changeimg: function () {
-        switch (this.state.img1) {
-    case "../assets/img/burgerking.png":
-    this.setState({ showResults: false });
-    this.setState({img1: "../assets/img/dominos.png",
-                   img2: "../assets/img/pizzahut.png"
-    });
-        break;
-    case "../assets/img/dominos.png":
-    this.setState({img1: "../assets/img/arbys.png",
-                   img2: "../assets/img/wendys.png"
-    });
-        break;
-    default:
-        console.log('hello');
-      };
-
+      changeimgRight: function () {
+        this.setState({ hideLeftArrow: false });
+          if(this.state.showImg1){
+            this.setState({showImg1:false});
+            this.setState({showImg2:true});
+          }
+          if(this.state.showImg2){
+            this.setState({showImg2:false});
+            this.setState({showImg3:true});
+          }
       },
 
       changeimgLeft: function () {
-        switch (this.state.img1) {
-          case "../assets/img/burgerking.png":
-              break;
-    case "../assets/img/dominos.png":
-    this.setState({ showResults: true });
-    this.setState({img1: "../assets/img/burgerking.png",
-                   img2: "../assets/img/mcdonalds.png"
-    });
-        break;
-    case "../assets/img/arbys.png":
-    this.setState({img1: "../assets/img/dominos.png",
-                   img2: "../assets/img/pizzahut.png"
-    });
-        break;
-
-    default:
-        console.log('hello');
-      };
-
-      },
+        if(this.state.showImg3){
+          this.setState({showImg3:false});
+          this.setState({showImg2:true});
+        }
+        if(this.state.showImg2){
+          this.setState({ hideLeftArrow: true });
+          this.setState({showImg2:false});
+          this.setState({showImg1:true});
+        }
+    },
 
       bkCall: function (e) {
-              switch (this.state.img1) {
-        case "../assets/img/burgerking.png":
         var num = 0;
         Actions.postIngredient(num);
 
-        break;
-
-        default:
-        console.log('hello this is a test');
-        }
       },
 
 
@@ -132,11 +112,41 @@ var Parent = React.createClass({
             return <Results key={item.id} yes={item.vote} />;
         });
 
+
+        var hide1 = classNames({
+          'invisible': this.state.invisible,
+          'visible': this.state.showImg1,
+          'fadeInUp': true,
+          'animated': true,
+          'hvr-grow': true
+          });
+
+        var hide2 = classNames({
+          'invisible': this.state.invisible,
+          'visible': this.state.showImg2,
+          'fadeInUp': true,
+          'animated': true,
+          'hvr-grow': true
+          });
+
+        var hide3 = classNames({
+          'invisible': this.state.invisible,
+          'visible': this.state.showImg3,
+          'fadeInUp': true,
+          'animated': true,
+          'hvr-grow': true
+          });
+
+
       return ( <div>
-        <i id="page-right" onClick={this.changeimg} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
-          <LeftSwipe myClick={this.changeimgLeft} showArrow={this.state.showResults}/>
-        <img className="fadeInUp animated hvr-grow" onClick={this.bkCall} src={this.state.img1} id="foodleft" alt="Burger King" height="394" width="440"></img>
-        <img className="fadeInUp animated hvr-grow" onClick={this.mcdCall} src={this.state.img2} id="foodright" alt="Burger King" height="394" width="440"></img>
+        <i id="page-right" onClick={this.changeimgRight} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
+          <LeftSwipe leftArrow={this.changeimgLeft} showArrow={this.state.hideLeftArrow}/>
+        <img className={hide1} onClick={this.bkCall} src="../assets/img/burgerking.png" id="foodleft" alt="Burger King" height="394" width="440"></img>
+        <img className={hide1} onClick={this.mcdCall} src="../assets/img/mcdonalds.png" id="foodright" alt="McDonalds" height="394" width="440"></img>
+        <img className={hide2} onClick={this.bkCall} src="../assets/img/dominos.png" id="foodleft" alt="Dominos" height="394" width="440"></img>
+        <img className={hide2} onClick={this.mcdCall} src="../assets/img/pizzahut.png" id="foodright" alt="Pizza Hut" height="394" width="440"></img>
+        <img className={hide3} onClick={this.bkCall} src="../assets/img/arbys.png" id="foodleft" alt="Arbys" height="394" width="440"></img>
+        <img className={hide3} onClick={this.mcdCall} src="../assets/img/wendys.png" id="foodright" alt="Wendys" height="394" width="440"></img>
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
         <p className="fadeInUp animated">Click one</p>
         <h2>You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>
@@ -157,7 +167,7 @@ var LeftSwipe = React.createClass({
         'hvr-grow': true
         });
         return (
-<i id="page-left" onClick={this.props.myClick} className={swipeClasses}></i>
+<i id="page-left" onClick={this.props.leftArrow} className={swipeClasses}></i>
         );
     }
 });

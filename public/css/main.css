@@ -44,6 +44,10 @@
   visibility: hidden;
 }
 
+.visible{
+  visibility: visible;
+}
+
 .infinite{
   -webkit-animation-iteration-count: infinite;
 }
