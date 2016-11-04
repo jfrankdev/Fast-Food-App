@@ -20990,17 +20990,12 @@ var Parent = React.createClass({
       img2: "../assets/img/mcdonalds.png",
       agree: [],
       disagree: [],
-      newText: "",
       showResults: true
     };
   },
 
   onChange: function (event, data) {
     this.setState({ agree: data });
-  },
-
-  onInputChange: function (e) {
-    this.setState({ newText: e.target.value });
   },
 
   changeimg: function () {
@@ -21042,10 +21037,11 @@ var Parent = React.createClass({
     };
   },
 
-  bkCall: function () {
+  bkCall: function (e) {
     switch (this.state.img1) {
       case "../assets/img/burgerking.png":
-        Actions.getIngredients();
+        var num = 0;
+        Actions.postIngredient(num);
 
         break;
 
@@ -21073,21 +21069,6 @@ var Parent = React.createClass({
     }
   },
 
-  onClick: function (e) {
-    if (this.state.newText) {
-      Actions.postIngredient(this.state.newText);
-    }
-
-    this.setState({ newText: "" });
-  },
-
-  onClickTest: function () {
-    var num = 0;
-    num++;
-    console.log(num);
-    Actions.postIngredient(num);
-  },
-
   render: function () {
 
     var id = this.state.agree.map(function (item) {
@@ -21095,22 +21076,16 @@ var Parent = React.createClass({
     });
 
     var no = this.state.disagree.map(function (item) {
-      return React.createElement(Results, { key: item.id, no: item.text });
+      return React.createElement(Results, { key: item.id, no: item.vote });
     });
 
     var yes = this.state.agree.map(function (item) {
-      return React.createElement(Results, { key: item.id, yes: item.text });
+      return React.createElement(Results, { key: item.id, yes: item.vote });
     });
 
     return React.createElement(
       'div',
       null,
-      React.createElement('input', { placeholder: 'add item', value: this.state.newText, onChange: this.onInputChange }),
-      React.createElement(
-        'button',
-        { onClick: this.onClickTest },
-        'Add Item'
-      ),
       React.createElement('i', { id: 'page-right', onClick: this.changeimg, className: 'fa fa-angle-double-right fa-5x hvr-grow' }),
       React.createElement(LeftSwipe, { myClick: this.changeimgLeft, showArrow: this.state.showResults }),
       React.createElement('img', { className: 'fadeInUp animated hvr-grow', onClick: this.bkCall, src: this.state.img1, id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
@@ -21177,24 +21152,24 @@ var Actions = require('./actions.jsx');
 var IngredientStore = Reflux.createStore({
   listenables: [Actions],
   getIngredients: function () {
-    HTTP.get('/bkYes').then(function (data) {
-      this.agree = data;
+    HTTP.get('/ingredients').then(function (json) {
+      this.ingredients = json;
       this.fireUpdate();
     }.bind(this));
   },
   postIngredient: function (num) {
 
-    if (!this.newText) {
-      this.newText = [];
+    if (!this.ingredients) {
+      this.ingredients = [];
     }
 
     var ingredient = {
-      "text": num,
-      "id": Math.floor(Date.now() / 1000) + num
+      "id": "",
+      "vote": num
+
     };
 
-    this.newText.push(num);
-    console.log('post test');
+    this.ingredients.push(ingredient);
     this.fireUpdate();
 
     HTTP.post('/ingredients', ingredient).then(function (response) {
@@ -21202,7 +21177,7 @@ var IngredientStore = Reflux.createStore({
     }.bind(this));
   },
   fireUpdate: function () {
-    this.trigger('change', this.agree); //change to this.newText for post
+    this.trigger('change', this.ingredients);
   }
 });
 

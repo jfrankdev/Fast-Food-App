@@ -31,7 +31,6 @@ var Parent = React.createClass({
           img2: "../assets/img/mcdonalds.png",
           agree: [],
           disagree: [],
-          newText: "",
           showResults: true
         }
 
@@ -41,9 +40,6 @@ var Parent = React.createClass({
         this.setState({agree: data});
       },
 
-      onInputChange: function(e) {
-        this.setState({newText: e.target.value});
-      },
 
       changeimg: function () {
         switch (this.state.img1) {
@@ -86,10 +82,11 @@ var Parent = React.createClass({
 
       },
 
-      bkCall: function () {
+      bkCall: function (e) {
               switch (this.state.img1) {
         case "../assets/img/burgerking.png":
-        Actions.getIngredients();
+        var num = 0;
+        Actions.postIngredient(num);
 
         break;
 
@@ -121,21 +118,6 @@ var Parent = React.createClass({
         }
       },
 
-      onClick: function(e) {
-        if (this.state.newText) {
-          Actions.postIngredient(this.state.newText);
-        }
-
-        this.setState({newText: ""});
-      },
-
-      onClickTest: function() {
-        var num = 0;
-        num ++;
-        console.log(num);
-          Actions.postIngredient(num);
-      },
-
       render: function() {
 
         var id = this.state.agree.map(function(item) {
@@ -143,16 +125,14 @@ var Parent = React.createClass({
         });
 
         var no = this.state.disagree.map(function(item) {
-            return <Results key={item.id} no={item.text} />;
+            return <Results key={item.id} no={item.vote} />;
         });
 
         var yes = this.state.agree.map(function(item) {
-            return <Results key={item.id} yes={item.text} />;
+            return <Results key={item.id} yes={item.vote} />;
         });
 
       return ( <div>
-        <input placeholder="add item" value={this.state.newText} onChange={this.onInputChange} />
-        <button onClick={this.onClickTest}>Add Item</button>
         <i id="page-right" onClick={this.changeimg} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
           <LeftSwipe myClick={this.changeimgLeft} showArrow={this.state.showResults}/>
         <img className="fadeInUp animated hvr-grow" onClick={this.bkCall} src={this.state.img1} id="foodleft" alt="Burger King" height="394" width="440"></img>

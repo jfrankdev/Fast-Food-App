@@ -5,25 +5,25 @@ var Actions = require('./actions.jsx');
 var IngredientStore = Reflux.createStore({
     listenables: [Actions],
     getIngredients: function() {
-      HTTP.get('/bkYes')
-      .then(function(data){
-        this.agree = data;
+      HTTP.get('/ingredients')
+      .then(function(json){
+        this.ingredients = json;
         this.fireUpdate();
       }.bind(this));
     },
     postIngredient: function(num) {
 
-      if (!this.newText) {
-        this.newText = [];
+      if (!this.ingredients) {
+        this.ingredients = [];
       }
 
       var ingredient = {
-        "text": num,
-        "id": Math.floor(Date.now() / 1000) + num
+        "id": "",
+        "vote": num
+
       };
 
-      this.newText.push(num);
-      console.log('post test');
+      this.ingredients.push(ingredient);
       this.fireUpdate();
 
       HTTP.post('/ingredients', ingredient)
@@ -33,7 +33,7 @@ var IngredientStore = Reflux.createStore({
 
     },
     fireUpdate: function() {
-      this.trigger('change', this.agree);//change to this.newText for post
+      this.trigger('change', this.ingredients);
     }
 });
 
