@@ -27,8 +27,6 @@ var Parent = React.createClass({
       mixins: [Reflux.listenTo(IngredientStore, 'onChange')],
       getInitialState: function() {
         return {
-          //img1: "../assets/img/burgerking.png",
-          //img2: "../assets/img/mcdonalds.png",
           agree: [],
           disagree: [],
           hideLeftArrow: true,
@@ -116,7 +114,7 @@ var Parent = React.createClass({
         var hide1 = classNames({
           'invisible': this.state.invisible,
           'visible': this.state.showImg1,
-          'fadeInUp': true,
+          'fadeInUp': this.state.showImg1,
           'animated': true,
           'hvr-grow': true
           });
@@ -124,7 +122,7 @@ var Parent = React.createClass({
         var hide2 = classNames({
           'invisible': this.state.invisible,
           'visible': this.state.showImg2,
-          'fadeInUp': true,
+          'fadeInUp': this.state.showImg2,
           'animated': true,
           'hvr-grow': true
           });
@@ -132,7 +130,7 @@ var Parent = React.createClass({
         var hide3 = classNames({
           'invisible': this.state.invisible,
           'visible': this.state.showImg3,
-          'fadeInUp': true,
+          'fadeInUp': this.state.showImg3,
           'animated': true,
           'hvr-grow': true
           });
