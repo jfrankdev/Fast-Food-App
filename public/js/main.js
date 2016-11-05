@@ -20961,7 +20961,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Reflux = require('reflux');
 var Actions = require('./reflux/actions.jsx');
-var IngredientStore = require('./reflux/ingredients-store.jsx');
+var VotesStore = require('./reflux/votes-store.jsx');
 var classNames = require('classnames');
 
 var Results = React.createClass({
@@ -20969,7 +20969,6 @@ var Results = React.createClass({
 
 
   render: function () {
-    console.log('hello this is a test');
     return React.createElement(
       'span',
       null,
@@ -20983,11 +20982,10 @@ var Results = React.createClass({
 var Parent = React.createClass({
   displayName: 'Parent',
 
-  mixins: [Reflux.listenTo(IngredientStore, 'onChange')],
+  mixins: [Reflux.listenTo(VotesStore, 'onChange')],
   getInitialState: function () {
     return {
       agree: [],
-      disagree: [],
       hideLeftArrow: true,
       invisible: true,
       showImg1: true,
@@ -21026,26 +21024,12 @@ var Parent = React.createClass({
 
   bkCall: function (e) {
     var num = 0;
-    Actions.postIngredient(num);
+    Actions.bkVote(num);
   },
 
   mcdCall: function () {
-    switch (this.state.img2) {
-      case "../assets/img/mcdonalds.png":
-        HTTP.get('/mcdYes').then(function (data) {
-          console.log('http get is working');
-          this.setState({ agree: data });
-        }.bind(this));
-
-        HTTP.get('/mcdNo').then(function (data) {
-          console.log('http get is working');
-          this.setState({ disagree: data });
-        }.bind(this));
-        break;
-
-      default:
-        console.log('hello this is a test');
-    }
+    var num = 0;
+    Actions.mcdVote(num);
   },
 
   render: function () {
@@ -21054,7 +21038,7 @@ var Parent = React.createClass({
       return React.createElement(Results, { key: item.id, yes: item.id });
     });
 
-    var no = this.state.disagree.map(function (item) {
+    var no = this.state.agree.map(function (item) {
       return React.createElement(Results, { key: item.id, no: item.vote });
     });
 
@@ -21109,7 +21093,7 @@ var Parent = React.createClass({
       ),
       React.createElement(
         'h2',
-        null,
+        { className: 'invisible' },
         'You chose ',
         id,
         '. ',
@@ -21142,12 +21126,12 @@ ReactDOM.render(React.createElement(
   'div',
   null,
   React.createElement(Parent, null)
-), document.getElementById('ingredients'));
+), document.getElementById('app'));
 
-},{"./reflux/actions.jsx":181,"./reflux/ingredients-store.jsx":182,"classnames":2,"react":159,"react-dom":3,"reflux":176}],181:[function(require,module,exports){
+},{"./reflux/actions.jsx":181,"./reflux/votes-store.jsx":182,"classnames":2,"react":159,"react-dom":3,"reflux":176}],181:[function(require,module,exports){
 var Reflux = require('reflux');
 
-var Actions = Reflux.createActions(['getIngredients', 'postIngredient']);
+var Actions = Reflux.createActions(['getBkVotes', 'bkVote', 'getMcdVotes', 'mcdVote']);
 
 module.exports = Actions;
 
@@ -21156,39 +21140,63 @@ var HTTP = require('../services/httpservice');
 var Reflux = require('reflux');
 var Actions = require('./actions.jsx');
 
-var IngredientStore = Reflux.createStore({
+var VotesStore = Reflux.createStore({
   listenables: [Actions],
-  getIngredients: function () {
-    HTTP.get('/ingredients').then(function (json) {
-      this.ingredients = json;
-      this.fireUpdate();
+  getBkVotes: function () {
+    HTTP.get('/bkYes').then(function (json) {
+      this.bkYes = json;
+      this.fireUpdateBk();
     }.bind(this));
   },
-  postIngredient: function (num) {
-
-    if (!this.ingredients) {
-      this.ingredients = [];
-    }
-
-    var ingredient = {
-      "id": "",
-      "vote": num
-
+  getMcdVotes: function () {
+    HTTP.get('/mcdYes').then(function (json) {
+      this.mcdYes = json;
+      this.fireUpdateMcd();
+    }.bind(this));
+  },
+  bkVote: function (num) {
+    if (!this.bkYes) {
+      this.bkYes = [];
     };
 
-    this.ingredients.push(ingredient);
-    this.fireUpdate();
+    var aBkVote = {
+      "id": "",
+      "vote": num
+    };
 
-    HTTP.post('/ingredients', ingredient).then(function (response) {
-      this.getIngredients();
+    this.bkYes.push(aBkVote);
+    this.fireUpdateBk();
+
+    HTTP.post('/bkYes', aBkVote).then(function (response) {
+      this.getBkVotes();
     }.bind(this));
   },
-  fireUpdate: function () {
-    this.trigger('change', this.ingredients);
+  mcdVote: function (num) {
+    if (!this.mcdYes) {
+      this.mcdYes = [];
+    };
+
+    var aMcdVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.mcdYes.push(aMcdVote);
+    this.fireUpdateMcd();
+
+    HTTP.post('/mcdYes', aMcdVote).then(function (response) {
+      this.getMcdVotes();
+    }.bind(this));
+  },
+  fireUpdateBk: function () {
+    this.trigger('change', this.bkYes);
+  },
+  fireUpdateMcd: function () {
+    this.trigger('change', this.mcdYes);
   }
 });
 
-module.exports = IngredientStore;
+module.exports = VotesStore;
 
 },{"../services/httpservice":183,"./actions.jsx":181,"reflux":176}],183:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');

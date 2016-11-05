@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Reflux = require('reflux');
 var Actions = require('./reflux/actions.jsx');
-var IngredientStore = require('./reflux/ingredients-store.jsx');
+var VotesStore = require('./reflux/votes-store.jsx');
 var classNames = require('classnames');
 
 
@@ -12,7 +12,6 @@ var Results = React.createClass({
 
 
     render: function() {
-      console.log('hello this is a test');
         return (<span>
           {this.props.yes}
           {this.props.no}
@@ -24,18 +23,16 @@ var Results = React.createClass({
 
 
 var Parent = React.createClass({
-      mixins: [Reflux.listenTo(IngredientStore, 'onChange')],
+      mixins: [Reflux.listenTo(VotesStore, 'onChange')],
       getInitialState: function() {
         return {
           agree: [],
-          disagree: [],
           hideLeftArrow: true,
           invisible: true,
           showImg1: true,
           showImg2: false,
           showImg3: false
         }
-
       },
 
       onChange: function(event, data) {
@@ -69,31 +66,13 @@ var Parent = React.createClass({
 
       bkCall: function (e) {
         var num = 0;
-        Actions.postIngredient(num);
-
+        Actions.bkVote(num);
       },
 
 
-
       mcdCall: function () {
-              switch (this.state.img2) {
-        case "../assets/img/mcdonalds.png":
-        HTTP.get('/mcdYes')
-        .then(function(data){
-          console.log('http get is working');
-          this.setState({agree: data});
-        }.bind(this));
-
-        HTTP.get('/mcdNo')
-        .then(function(data){
-          console.log('http get is working');
-          this.setState({disagree: data});
-        }.bind(this));
-        break;
-
-        default:
-        console.log('hello this is a test');
-        }
+        var num = 0;
+        Actions.mcdVote(num);
       },
 
       render: function() {
@@ -102,7 +81,7 @@ var Parent = React.createClass({
             return <Results key={item.id} yes={item.id} />;
         });
 
-        var no = this.state.disagree.map(function(item) {
+        var no = this.state.agree.map(function(item) {
             return <Results key={item.id} no={item.vote} />;
         });
 
@@ -147,7 +126,7 @@ var Parent = React.createClass({
         <img className={hide3} onClick={this.mcdCall} src="../assets/img/wendys.png" id="foodright" alt="Wendys" height="394" width="440"></img>
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
         <p className="fadeInUp animated">Click one</p>
-        <h2>You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>
+        <h2 className="invisible">You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>
               </div>
       )
 
@@ -173,4 +152,4 @@ var LeftSwipe = React.createClass({
 ReactDOM.render(<div>
   <Parent />
 
-  </div>, document.getElementById('ingredients'));
+  </div>, document.getElementById('app'));
