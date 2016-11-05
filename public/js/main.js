@@ -20962,10 +20962,11 @@ var ReactDOM = require('react-dom');
 var Reflux = require('reflux');
 var Actions = require('./reflux/actions.jsx');
 var VotesStore = require('./reflux/votes-store.jsx');
+var NoStore = require('./reflux/no-store.jsx');
 var classNames = require('classnames');
 
-var Results = React.createClass({
-  displayName: 'Results',
+var YesVotes = React.createClass({
+  displayName: 'YesVotes',
 
 
   render: function () {
@@ -20979,13 +20980,28 @@ var Results = React.createClass({
   }
 });
 
+var NoVotes = React.createClass({
+  displayName: 'NoVotes',
+
+
+  render: function () {
+    return React.createElement(
+      'span',
+      null,
+      this.props.no
+    );
+  }
+});
+
 var Parent = React.createClass({
   displayName: 'Parent',
 
-  mixins: [Reflux.listenTo(VotesStore, 'onChange')],
+  mixins: [Reflux.listenTo(VotesStore, 'onChangeYes'), Reflux.listenTo(NoStore, 'onChangeNo')],
+
   getInitialState: function () {
     return {
-      agree: [],
+      voteYes: [],
+      voteNo: [],
       hideLeftArrow: true,
       invisible: true,
       showImg1: true,
@@ -20994,8 +21010,14 @@ var Parent = React.createClass({
     };
   },
 
-  onChange: function (event, data) {
-    this.setState({ agree: data });
+  onChangeYes: function (event, data) {
+    console.log(data);
+    this.setState({ voteYes: data });
+  },
+
+  onChangeNo: function (event, data) {
+    console.log(data);
+    this.setState({ voteNo: data });
   },
 
   changeimgRight: function () {
@@ -21025,6 +21047,7 @@ var Parent = React.createClass({
   bkCall: function (e) {
     var num = 0;
     Actions.bkVote(num);
+    Actions.getNoVote();
   },
 
   mcdCall: function () {
@@ -21034,16 +21057,16 @@ var Parent = React.createClass({
 
   render: function () {
 
-    var id = this.state.agree.map(function (item) {
-      return React.createElement(Results, { key: item.id, yes: item.id });
+    var id = this.state.voteYes.map(function (item) {
+      return React.createElement(YesVotes, { key: item.id, yes: item.id });
     });
 
-    var no = this.state.agree.map(function (item) {
-      return React.createElement(Results, { key: item.id, no: item.vote });
+    var no = this.state.voteNo.map(function (item) {
+      return React.createElement(NoVotes, { key: item.id, no: item.vote });
     });
 
-    var yes = this.state.agree.map(function (item) {
-      return React.createElement(Results, { key: item.id, yes: item.vote });
+    var yes = this.state.voteYes.map(function (item) {
+      return React.createElement(YesVotes, { key: item.id, yes: item.vote });
     });
 
     var hide1 = classNames({
@@ -21128,14 +21151,35 @@ ReactDOM.render(React.createElement(
   React.createElement(Parent, null)
 ), document.getElementById('app'));
 
-},{"./reflux/actions.jsx":181,"./reflux/votes-store.jsx":182,"classnames":2,"react":159,"react-dom":3,"reflux":176}],181:[function(require,module,exports){
+},{"./reflux/actions.jsx":181,"./reflux/no-store.jsx":182,"./reflux/votes-store.jsx":183,"classnames":2,"react":159,"react-dom":3,"reflux":176}],181:[function(require,module,exports){
 var Reflux = require('reflux');
 
-var Actions = Reflux.createActions(['getBkVotes', 'bkVote', 'getMcdVotes', 'mcdVote']);
+var Actions = Reflux.createActions(['getBkVotes', 'bkVote', 'getMcdVotes', 'mcdVote', 'getNoVote']);
 
 module.exports = Actions;
 
 },{"reflux":176}],182:[function(require,module,exports){
+var HTTP = require('../services/httpservice');
+var Reflux = require('reflux');
+var Actions = require('./actions.jsx');
+
+var NoStore = Reflux.createStore({
+  listenables: [Actions],
+  getNoVote: function () {
+    HTTP.get('/mcdYes').then(function (json) {
+      this.mcdNo = json;
+      this.fireUpdateBkNo();
+    }.bind(this));
+  },
+
+  fireUpdateBkNo: function () {
+    this.trigger('onChangeNo', this.mcdNo);
+  }
+});
+
+module.exports = NoStore;
+
+},{"../services/httpservice":184,"./actions.jsx":181,"reflux":176}],183:[function(require,module,exports){
 var HTTP = require('../services/httpservice');
 var Reflux = require('reflux');
 var Actions = require('./actions.jsx');
@@ -21189,16 +21233,16 @@ var VotesStore = Reflux.createStore({
     }.bind(this));
   },
   fireUpdateBk: function () {
-    this.trigger('change', this.bkYes);
+    this.trigger('onChangeYes', this.bkYes);
   },
   fireUpdateMcd: function () {
-    this.trigger('change', this.mcdYes);
+    //this.trigger('onChangeYes', this.mcdYes);
   }
 });
 
 module.exports = VotesStore;
 
-},{"../services/httpservice":183,"./actions.jsx":181,"reflux":176}],183:[function(require,module,exports){
+},{"../services/httpservice":184,"./actions.jsx":181,"reflux":176}],184:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:3000';
 

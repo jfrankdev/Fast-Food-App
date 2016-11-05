@@ -4,7 +4,8 @@ var Actions = Reflux.createActions([
     'getBkVotes',
     'bkVote',
     'getMcdVotes',
-    'mcdVote'
+    'mcdVote',
+    'getNoVote'
 ]);
 
 module.exports = Actions;

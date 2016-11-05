@@ -3,12 +3,13 @@ var ReactDOM = require('react-dom');
 var Reflux = require('reflux');
 var Actions = require('./reflux/actions.jsx');
 var VotesStore = require('./reflux/votes-store.jsx');
+var NoStore = require('./reflux/no-store.jsx');
 var classNames = require('classnames');
 
 
 
 
-var Results = React.createClass({
+var YesVotes = React.createClass({
 
 
     render: function() {
@@ -21,12 +22,28 @@ var Results = React.createClass({
     }
  });
 
+ var NoVotes = React.createClass({
+
+
+     render: function() {
+         return (<span>
+           {this.props.no}
+           </span>
+       );
+     }
+  });
+
 
 var Parent = React.createClass({
-      mixins: [Reflux.listenTo(VotesStore, 'onChange')],
+      mixins: [
+    Reflux.listenTo(VotesStore, 'onChangeYes'),
+    Reflux.listenTo(NoStore, 'onChangeNo')
+    ],
+
       getInitialState: function() {
         return {
-          agree: [],
+          voteYes: [],
+          voteNo: [],
           hideLeftArrow: true,
           invisible: true,
           showImg1: true,
@@ -35,8 +52,14 @@ var Parent = React.createClass({
         }
       },
 
-      onChange: function(event, data) {
-        this.setState({agree: data});
+      onChangeYes: function(event, data) {
+        console.log(data);
+      this.setState({voteYes: data});
+      },
+
+      onChangeNo: function(event, data) {
+        console.log(data);
+      this.setState({voteNo: data});
       },
 
 
@@ -67,6 +90,7 @@ var Parent = React.createClass({
       bkCall: function (e) {
         var num = 0;
         Actions.bkVote(num);
+        Actions.getNoVote();
       },
 
 
@@ -77,16 +101,16 @@ var Parent = React.createClass({
 
       render: function() {
 
-        var id = this.state.agree.map(function(item) {
-            return <Results key={item.id} yes={item.id} />;
+        var id = this.state.voteYes.map(function(item) {
+            return <YesVotes key={item.id} yes={item.id} />;
         });
 
-        var no = this.state.agree.map(function(item) {
-            return <Results key={item.id} no={item.vote} />;
+        var no = this.state.voteNo.map(function(item) {
+            return <NoVotes key={item.id} no={item.vote} />;
         });
 
-        var yes = this.state.agree.map(function(item) {
-            return <Results key={item.id} yes={item.vote} />;
+        var yes = this.state.voteYes.map(function(item) {
+            return <YesVotes key={item.id} yes={item.vote} />;
         });
 
 
@@ -151,5 +175,4 @@ var LeftSwipe = React.createClass({
 
 ReactDOM.render(<div>
   <Parent />
-
   </div>, document.getElementById('app'));

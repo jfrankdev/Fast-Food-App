@@ -57,10 +57,10 @@ var VotesStore = Reflux.createStore({
 
     },
     fireUpdateBk: function() {
-      this.trigger('change', this.bkYes);
+      this.trigger('onChangeYes', this.bkYes);
     },
     fireUpdateMcd: function() {
-      this.trigger('change', this.mcdYes);
+      //this.trigger('onChangeYes', this.mcdYes);
     }
 });
 
