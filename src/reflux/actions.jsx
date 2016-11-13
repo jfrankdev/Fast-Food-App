@@ -1,11 +1,18 @@
 var Reflux = require('reflux');
 
 var Actions = Reflux.createActions([
-    'getBkVotes',
     'bkVote',
-    'getMcdVotes',
     'mcdVote',
-    'getNoVote'
+    'getMcdNo',
+    'getBkNo',
+    'domVote',
+    'getPhutNo',
+    'phutVote',
+    'getDomNo',
+    'arbyVote',
+    'getWendNo',
+    'wendVote',
+    'getArbyNo'
 ]);
 
 module.exports = Actions;

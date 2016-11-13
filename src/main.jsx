@@ -11,7 +11,6 @@ var classNames = require('classnames');
 
 var YesVotes = React.createClass({
 
-
     render: function() {
         return (<span>
           {this.props.yes}
@@ -23,7 +22,6 @@ var YesVotes = React.createClass({
  });
 
  var NoVotes = React.createClass({
-
 
      render: function() {
          return (<span>
@@ -48,17 +46,16 @@ var Parent = React.createClass({
           invisible: true,
           showImg1: true,
           showImg2: false,
-          showImg3: false
+          showImg3: false,
+          showImg4: false
         }
       },
 
       onChangeYes: function(event, data) {
-        console.log(data);
       this.setState({voteYes: data});
       },
 
       onChangeNo: function(event, data) {
-        console.log(data);
       this.setState({voteNo: data});
       },
 
@@ -73,9 +70,17 @@ var Parent = React.createClass({
             this.setState({showImg2:false});
             this.setState({showImg3:true});
           }
+          if(this.state.showImg3){
+            this.setState({showImg3:false});
+            this.setState({showImg4:true});
+          }
       },
 
       changeimgLeft: function () {
+        if(this.state.showImg4){
+          this.setState({showImg4:false});
+          this.setState({showImg3:true});
+        }
         if(this.state.showImg3){
           this.setState({showImg3:false});
           this.setState({showImg2:true});
@@ -90,13 +95,37 @@ var Parent = React.createClass({
       bkCall: function (e) {
         var num = 0;
         Actions.bkVote(num);
-        Actions.getNoVote();
+        Actions.getMcdNo();
       },
-
 
       mcdCall: function () {
         var num = 0;
         Actions.mcdVote(num);
+        Actions.getBkNo();
+      },
+
+      domCall: function () {
+        var num = 0;
+        Actions.domVote(num);
+        Actions.getPhutNo();
+      },
+
+      phutCall: function () {
+        var num = 0;
+        Actions.phutVote(num);
+        Actions.getDomNo();
+      },
+
+      arbyCall: function () {
+        var num = 0;
+        Actions.arbyVote(num);
+        Actions.getWendNo();
+      },
+
+      wendCall: function () {
+        var num = 0;
+        Actions.wendVote(num);
+        Actions.getArbyNo();
       },
 
       render: function() {
@@ -138,16 +167,27 @@ var Parent = React.createClass({
           'hvr-grow': true
           });
 
+        var hide4 = classNames({
+          'invisible': this.state.invisible,
+          'visible': this.state.showImg4,
+          'fadeInUp': this.state.showImg4,
+          'animated': true,
+          'hvr-grow': true
+          });
+
+
 
       return ( <div>
         <i id="page-right" onClick={this.changeimgRight} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
           <LeftSwipe leftArrow={this.changeimgLeft} showArrow={this.state.hideLeftArrow}/>
         <img className={hide1} onClick={this.bkCall} src="../assets/img/burgerking.png" id="foodleft" alt="Burger King" height="394" width="440"></img>
         <img className={hide1} onClick={this.mcdCall} src="../assets/img/mcdonalds.png" id="foodright" alt="McDonalds" height="394" width="440"></img>
-        <img className={hide2} onClick={this.bkCall} src="../assets/img/dominos.png" id="foodleft" alt="Dominos" height="394" width="440"></img>
-        <img className={hide2} onClick={this.mcdCall} src="../assets/img/pizzahut.png" id="foodright" alt="Pizza Hut" height="394" width="440"></img>
-        <img className={hide3} onClick={this.bkCall} src="../assets/img/arbys.png" id="foodleft" alt="Arbys" height="394" width="440"></img>
-        <img className={hide3} onClick={this.mcdCall} src="../assets/img/wendys.png" id="foodright" alt="Wendys" height="394" width="440"></img>
+        <img className={hide2} onClick={this.domCall} src="../assets/img/dominos.png" id="foodleft" alt="Dominos" height="394" width="440"></img>
+        <img className={hide2} onClick={this.phutCall} src="../assets/img/pizzahut.png" id="foodright" alt="Pizza Hut" height="394" width="440"></img>
+        <img className={hide3} onClick={this.arbyCall} src="../assets/img/arbys.png" id="foodleft" alt="Arbys" height="394" width="440"></img>
+        <img className={hide3} onClick={this.wendCall} src="../assets/img/wendys.png" id="foodright" alt="Wendys" height="394" width="440"></img>
+        <img className={hide4} onClick={this.chicCall} src="../assets/img/chickfila.png" id="foodleft" alt="chickfila" height="394" width="540"></img>
+        <img className={hide4} onClick={this.kfcCall} src="../assets/img/kfc.png" id="foodright" alt="kfc" height="394" width="440"></img>
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
         <p className="fadeInUp animated">Click one</p>
         <h2 className="invisible">You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>

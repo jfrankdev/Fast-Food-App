@@ -21006,17 +21006,16 @@ var Parent = React.createClass({
       invisible: true,
       showImg1: true,
       showImg2: false,
-      showImg3: false
+      showImg3: false,
+      showImg4: false
     };
   },
 
   onChangeYes: function (event, data) {
-    console.log(data);
     this.setState({ voteYes: data });
   },
 
   onChangeNo: function (event, data) {
-    console.log(data);
     this.setState({ voteNo: data });
   },
 
@@ -21030,9 +21029,17 @@ var Parent = React.createClass({
       this.setState({ showImg2: false });
       this.setState({ showImg3: true });
     }
+    if (this.state.showImg3) {
+      this.setState({ showImg3: false });
+      this.setState({ showImg4: true });
+    }
   },
 
   changeimgLeft: function () {
+    if (this.state.showImg4) {
+      this.setState({ showImg4: false });
+      this.setState({ showImg3: true });
+    }
     if (this.state.showImg3) {
       this.setState({ showImg3: false });
       this.setState({ showImg2: true });
@@ -21047,12 +21054,37 @@ var Parent = React.createClass({
   bkCall: function (e) {
     var num = 0;
     Actions.bkVote(num);
-    Actions.getNoVote();
+    Actions.getMcdNo();
   },
 
   mcdCall: function () {
     var num = 0;
     Actions.mcdVote(num);
+    Actions.getBkNo();
+  },
+
+  domCall: function () {
+    var num = 0;
+    Actions.domVote(num);
+    Actions.getPhutNo();
+  },
+
+  phutCall: function () {
+    var num = 0;
+    Actions.phutVote(num);
+    Actions.getDomNo();
+  },
+
+  arbyCall: function () {
+    var num = 0;
+    Actions.arbyVote(num);
+    Actions.getWendNo();
+  },
+
+  wendCall: function () {
+    var num = 0;
+    Actions.wendVote(num);
+    Actions.getArbyNo();
   },
 
   render: function () {
@@ -21093,6 +21125,14 @@ var Parent = React.createClass({
       'hvr-grow': true
     });
 
+    var hide4 = classNames({
+      'invisible': this.state.invisible,
+      'visible': this.state.showImg4,
+      'fadeInUp': this.state.showImg4,
+      'animated': true,
+      'hvr-grow': true
+    });
+
     return React.createElement(
       'div',
       null,
@@ -21100,10 +21140,12 @@ var Parent = React.createClass({
       React.createElement(LeftSwipe, { leftArrow: this.changeimgLeft, showArrow: this.state.hideLeftArrow }),
       React.createElement('img', { className: hide1, onClick: this.bkCall, src: '../assets/img/burgerking.png', id: 'foodleft', alt: 'Burger King', height: '394', width: '440' }),
       React.createElement('img', { className: hide1, onClick: this.mcdCall, src: '../assets/img/mcdonalds.png', id: 'foodright', alt: 'McDonalds', height: '394', width: '440' }),
-      React.createElement('img', { className: hide2, onClick: this.bkCall, src: '../assets/img/dominos.png', id: 'foodleft', alt: 'Dominos', height: '394', width: '440' }),
-      React.createElement('img', { className: hide2, onClick: this.mcdCall, src: '../assets/img/pizzahut.png', id: 'foodright', alt: 'Pizza Hut', height: '394', width: '440' }),
-      React.createElement('img', { className: hide3, onClick: this.bkCall, src: '../assets/img/arbys.png', id: 'foodleft', alt: 'Arbys', height: '394', width: '440' }),
-      React.createElement('img', { className: hide3, onClick: this.mcdCall, src: '../assets/img/wendys.png', id: 'foodright', alt: 'Wendys', height: '394', width: '440' }),
+      React.createElement('img', { className: hide2, onClick: this.domCall, src: '../assets/img/dominos.png', id: 'foodleft', alt: 'Dominos', height: '394', width: '440' }),
+      React.createElement('img', { className: hide2, onClick: this.phutCall, src: '../assets/img/pizzahut.png', id: 'foodright', alt: 'Pizza Hut', height: '394', width: '440' }),
+      React.createElement('img', { className: hide3, onClick: this.arbyCall, src: '../assets/img/arbys.png', id: 'foodleft', alt: 'Arbys', height: '394', width: '440' }),
+      React.createElement('img', { className: hide3, onClick: this.wendCall, src: '../assets/img/wendys.png', id: 'foodright', alt: 'Wendys', height: '394', width: '440' }),
+      React.createElement('img', { className: hide4, onClick: this.chicCall, src: '../assets/img/chickfila.png', id: 'foodleft', alt: 'chickfila', height: '394', width: '540' }),
+      React.createElement('img', { className: hide4, onClick: this.kfcCall, src: '../assets/img/kfc.png', id: 'foodright', alt: 'kfc', height: '394', width: '440' }),
       React.createElement(
         'h1',
         { className: 'fadeInUp animated' },
@@ -21154,7 +21196,7 @@ ReactDOM.render(React.createElement(
 },{"./reflux/actions.jsx":181,"./reflux/no-store.jsx":182,"./reflux/votes-store.jsx":183,"classnames":2,"react":159,"react-dom":3,"reflux":176}],181:[function(require,module,exports){
 var Reflux = require('reflux');
 
-var Actions = Reflux.createActions(['getBkVotes', 'bkVote', 'getMcdVotes', 'mcdVote', 'getNoVote']);
+var Actions = Reflux.createActions(['bkVote', 'mcdVote', 'getMcdNo', 'getBkNo', 'domVote', 'getPhutNo', 'phutVote', 'getDomNo', 'arbyVote', 'getWendNo', 'wendVote', 'getArbyNo']);
 
 module.exports = Actions;
 
@@ -21165,15 +21207,59 @@ var Actions = require('./actions.jsx');
 
 var NoStore = Reflux.createStore({
   listenables: [Actions],
-  getNoVote: function () {
+  getMcdNo: function () {
     HTTP.get('/mcdYes').then(function (json) {
       this.mcdNo = json;
       this.fireUpdateBkNo();
     }.bind(this));
   },
-
+  getBkNo: function () {
+    HTTP.get('/bkYes').then(function (json) {
+      this.bkNo = json;
+      this.fireUpdateMcdNo();
+    }.bind(this));
+  },
+  getPhutNo: function () {
+    HTTP.get('/phutYes').then(function (json) {
+      this.phutNo = json;
+      this.fireUpdatePhutNo();
+    }.bind(this));
+  },
+  getDomNo: function () {
+    HTTP.get('/domYes').then(function (json) {
+      this.domNo = json;
+      this.fireUpdateDomNo();
+    }.bind(this));
+  },
+  getWendNo: function () {
+    HTTP.get('/wendYes').then(function (json) {
+      this.wendNo = json;
+      this.fireUpdateWendNo();
+    }.bind(this));
+  },
+  getArbyNo: function () {
+    HTTP.get('/arbyYes').then(function (json) {
+      this.arbyNo = json;
+      this.fireUpdateArbyNo();
+    }.bind(this));
+  },
   fireUpdateBkNo: function () {
     this.trigger('onChangeNo', this.mcdNo);
+  },
+  fireUpdateMcdNo: function () {
+    this.trigger('onChangeNo', this.bkNo);
+  },
+  fireUpdatePhutNo: function () {
+    this.trigger('onChangeNo', this.phutNo);
+  },
+  fireUpdateDomNo: function () {
+    this.trigger('onChangeNo', this.domNo);
+  },
+  fireUpdateWendNo: function () {
+    this.trigger('onChangeNo', this.wendNo);
+  },
+  fireUpdateArbyNo: function () {
+    this.trigger('onChangeNo', this.arbyNo);
   }
 });
 
@@ -21196,6 +21282,30 @@ var VotesStore = Reflux.createStore({
     HTTP.get('/mcdYes').then(function (json) {
       this.mcdYes = json;
       this.fireUpdateMcd();
+    }.bind(this));
+  },
+  getDomVotes: function () {
+    HTTP.get('/domYes').then(function (json) {
+      this.domYes = json;
+      this.fireUpdateDom();
+    }.bind(this));
+  },
+  getPhutVotes: function () {
+    HTTP.get('/phutYes').then(function (json) {
+      this.phutYes = json;
+      this.fireUpdatePhut();
+    }.bind(this));
+  },
+  getArbyVotes: function () {
+    HTTP.get('/arbyYes').then(function (json) {
+      this.arbyYes = json;
+      this.fireUpdateArby();
+    }.bind(this));
+  },
+  getWendVotes: function () {
+    HTTP.get('/wendYes').then(function (json) {
+      this.wendYes = json;
+      this.fireUpdateWend();
     }.bind(this));
   },
   bkVote: function (num) {
@@ -21232,11 +21342,91 @@ var VotesStore = Reflux.createStore({
       this.getMcdVotes();
     }.bind(this));
   },
+  domVote: function (num) {
+    if (!this.domYes) {
+      this.domYes = [];
+    };
+
+    var aDomVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.domYes.push(aDomVote);
+    this.fireUpdateDom();
+
+    HTTP.post('/domYes', aDomVote).then(function (response) {
+      this.getDomVotes();
+    }.bind(this));
+  },
+  phutVote: function (num) {
+    if (!this.phutYes) {
+      this.phutYes = [];
+    };
+
+    var aPhutVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.phutYes.push(aPhutVote);
+    this.fireUpdatePhut();
+
+    HTTP.post('/phutYes', aPhutVote).then(function (response) {
+      this.getPhutVotes();
+    }.bind(this));
+  },
+  arbyVote: function (num) {
+    if (!this.arbyYes) {
+      this.arbyYes = [];
+    };
+
+    var aArbyVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.arbyYes.push(aArbyVote);
+    this.fireUpdateArby();
+
+    HTTP.post('/arbyYes', aArbyVote).then(function (response) {
+      this.getArbyVotes();
+    }.bind(this));
+  },
+  wendVote: function (num) {
+    if (!this.wendYes) {
+      this.wendYes = [];
+    };
+
+    var aWendVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.wendYes.push(aWendVote);
+    this.fireUpdateWend();
+
+    HTTP.post('/wendYes', aWendVote).then(function (response) {
+      this.getWendVotes();
+    }.bind(this));
+  },
   fireUpdateBk: function () {
     this.trigger('onChangeYes', this.bkYes);
   },
   fireUpdateMcd: function () {
-    //this.trigger('onChangeYes', this.mcdYes);
+    this.trigger('onChangeYes', this.mcdYes);
+  },
+  fireUpdateDom: function () {
+    this.trigger('onChangeYes', this.domYes);
+  },
+  fireUpdatePhut: function () {
+    this.trigger('onChangeYes', this.phutYes);
+  },
+  fireUpdateArby: function () {
+    this.trigger('onChangeYes', this.arbyYes);
+  },
+  fireUpdateWend: function () {
+    this.trigger('onChangeYes', this.wendYes);
   }
 });
 
