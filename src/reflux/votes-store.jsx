@@ -46,6 +46,40 @@ var VotesStore = Reflux.createStore({
         this.fireUpdateWend();
       }.bind(this));
     },
+    getChicVotes: function() {
+      HTTP.get('/chicYes')
+      .then(function(json){
+        this.chicYes = json;
+        this.fireUpdateChic();
+      }.bind(this));
+    },
+    getKfcVotes: function() {
+      HTTP.get('/kfcYes')
+      .then(function(json){
+        this.kfcYes = json;
+        this.fireUpdateKfc();
+      }.bind(this));
+    },
+    getSubVotes: function() {
+      HTTP.get('/subYes')
+      .then(function(json){
+        this.subYes = json;
+        this.fireUpdateSub();
+      }.bind(this));
+    },
+    getJimVotes: function() {
+      HTTP.get('/jimYes')
+      .then(function(json){
+        this.jimYes = json;
+        this.fireUpdateJim();
+      }.bind(this));
+    },
+
+
+
+
+
+
     bkVote: function(num) {
       if (!this.bkYes) {
         this.bkYes = [];
@@ -160,6 +194,87 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
+    chicVote: function(num) {
+      if (!this.chicYes) {
+        this.chicYes = [];
+      };
+
+      var aChicVote = {
+        "id": "",
+        "vote": num
+      };
+
+      this.chicYes.push(aChicVote);
+      this.fireUpdateChic();
+
+      HTTP.post('/chicYes', aChicVote)
+      .then(function(response) {
+        this.getChicVotes();
+      }.bind(this));
+
+    },
+    kfcVote: function(num) {
+      if (!this.kfcYes) {
+        this.kfcYes = [];
+      };
+
+      var aKfcVote = {
+        "id": "",
+        "vote": num
+      };
+
+      this.kfcYes.push(aKfcVote);
+      this.fireUpdateKfc();
+
+      HTTP.post('/kfcYes', aKfcVote)
+      .then(function(response) {
+        this.getKfcVotes();
+      }.bind(this));
+
+    },
+    subVote: function(num) {
+      if (!this.subYes) {
+        this.subYes = [];
+      };
+
+      var aSubVote = {
+        "id": "",
+        "vote": num
+      };
+
+      this.subYes.push(aSubVote);
+      this.fireUpdateSub();
+
+      HTTP.post('/subYes', aSubVote)
+      .then(function(response) {
+        this.getSubVotes();
+      }.bind(this));
+
+    },
+    jimVote: function(num) {
+      if (!this.jimYes) {
+        this.jimYes = [];
+      };
+
+      var aJimVote = {
+        "id": "",
+        "vote": num
+      };
+
+      this.jimYes.push(aJimVote);
+      this.fireUpdateJim();
+
+      HTTP.post('/jimYes', aJimVote)
+      .then(function(response) {
+        this.getJimVotes();
+      }.bind(this));
+
+    },
+
+
+
+
+
     fireUpdateBk: function() {
       this.trigger('onChangeYes', this.bkYes);
     },
@@ -177,6 +292,18 @@ var VotesStore = Reflux.createStore({
     },
     fireUpdateWend: function() {
       this.trigger('onChangeYes', this.wendYes);
+    },
+    fireUpdateChic: function() {
+      this.trigger('onChangeYes', this.chicYes);
+    },
+    fireUpdateKfc: function() {
+      this.trigger('onChangeYes', this.kfcYes);
+    },
+    fireUpdateSub: function() {
+      this.trigger('onChangeYes', this.subYes);
+    },
+    fireUpdateJim: function() {
+      this.trigger('onChangeYes', this.jimYes);
     }
 });
 

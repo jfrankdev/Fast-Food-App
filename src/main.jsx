@@ -47,7 +47,8 @@ var Parent = React.createClass({
           showImg1: true,
           showImg2: false,
           showImg3: false,
-          showImg4: false
+          showImg4: false,
+          showImg5: false
         }
       },
 
@@ -61,22 +62,30 @@ var Parent = React.createClass({
 
 
       changeimgRight: function () {
-        this.setState({ hideLeftArrow: false });
-          if(this.state.showImg1){
-            this.setState({showImg1:false});
-            this.setState({showImg2:true});
-          }
-          if(this.state.showImg2){
-            this.setState({showImg2:false});
-            this.setState({showImg3:true});
-          }
-          if(this.state.showImg3){
-            this.setState({showImg3:false});
-            this.setState({showImg4:true});
-          }
-      },
+      this.setState({ hideLeftArrow: false });
+        if(this.state.showImg1){
+          this.setState({showImg1:false});
+          this.setState({showImg2:true});
+        }
+        if(this.state.showImg2){
+          this.setState({showImg2:false});
+          this.setState({showImg3:true});
+        }
+        if(this.state.showImg3){
+          this.setState({showImg3:false});
+          this.setState({showImg4:true});
+        }
+        if(this.state.showImg4){
+          this.setState({showImg4:false});
+          this.setState({showImg5:true});
+        }
+    },
 
       changeimgLeft: function () {
+        if(this.state.showImg5){
+          this.setState({showImg5:false});
+          this.setState({showImg4:true});
+        }
         if(this.state.showImg4){
           this.setState({showImg4:false});
           this.setState({showImg3:true});
@@ -128,6 +137,31 @@ var Parent = React.createClass({
         Actions.getArbyNo();
       },
 
+      chicCall: function () {
+        var num = 0;
+        Actions.chicVote(num);
+        Actions.getKfcNo();
+      },
+
+      kfcCall: function () {
+        var num = 0;
+        Actions.kfcVote(num);
+        Actions.getChicNo();
+      },
+
+      subCall: function () {
+        var num = 0;
+        Actions.subVote(num);
+        Actions.getJimNo();
+      },
+
+      jimCall: function () {
+        var num = 0;
+        Actions.jimVote(num);
+        Actions.getSubNo();
+
+      },
+
       render: function() {
 
         var id = this.state.voteYes.map(function(item) {
@@ -175,6 +209,14 @@ var Parent = React.createClass({
           'hvr-grow': true
           });
 
+        var hide5 = classNames({
+          'invisible': this.state.invisible,
+          'visible': this.state.showImg5,
+          'fadeInUp': this.state.showImg5,
+          'animated': true,
+          'hvr-grow': true
+          });
+
 
 
       return ( <div>
@@ -186,8 +228,10 @@ var Parent = React.createClass({
         <img className={hide2} onClick={this.phutCall} src="../assets/img/pizzahut.png" id="foodright" alt="Pizza Hut" height="394" width="440"></img>
         <img className={hide3} onClick={this.arbyCall} src="../assets/img/arbys.png" id="foodleft" alt="Arbys" height="394" width="440"></img>
         <img className={hide3} onClick={this.wendCall} src="../assets/img/wendys.png" id="foodright" alt="Wendys" height="394" width="440"></img>
-        <img className={hide4} onClick={this.chicCall} src="../assets/img/chickfila.png" id="foodleft" alt="chickfila" height="394" width="540"></img>
+        <img className={hide4} onClick={this.chicCall} src="../assets/img/chickfila.png" id="foodleft" alt="Chickfila" height="394" width="540"></img>
         <img className={hide4} onClick={this.kfcCall} src="../assets/img/kfc.png" id="foodright" alt="kfc" height="394" width="440"></img>
+        <img className={hide5} onClick={this.subCall} src="../assets/img/subway.png" id="foodleft" alt="Subway" height="394" width="600"></img>
+        <img className={hide5} onClick={this.jimCall} src="../assets/img/jimmyjohns.png" id="foodright" alt="Jimmy John's" height="394" width="440"></img>
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
         <p className="fadeInUp animated">Click one</p>
         <h2 className="invisible">You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>

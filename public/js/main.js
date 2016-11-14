@@ -21007,7 +21007,8 @@ var Parent = React.createClass({
       showImg1: true,
       showImg2: false,
       showImg3: false,
-      showImg4: false
+      showImg4: false,
+      showImg5: false
     };
   },
 
@@ -21033,9 +21034,17 @@ var Parent = React.createClass({
       this.setState({ showImg3: false });
       this.setState({ showImg4: true });
     }
+    if (this.state.showImg4) {
+      this.setState({ showImg4: false });
+      this.setState({ showImg5: true });
+    }
   },
 
   changeimgLeft: function () {
+    if (this.state.showImg5) {
+      this.setState({ showImg5: false });
+      this.setState({ showImg4: true });
+    }
     if (this.state.showImg4) {
       this.setState({ showImg4: false });
       this.setState({ showImg3: true });
@@ -21087,6 +21096,30 @@ var Parent = React.createClass({
     Actions.getArbyNo();
   },
 
+  chicCall: function () {
+    var num = 0;
+    Actions.chicVote(num);
+    Actions.getKfcNo();
+  },
+
+  kfcCall: function () {
+    var num = 0;
+    Actions.kfcVote(num);
+    Actions.getChicNo();
+  },
+
+  subCall: function () {
+    var num = 0;
+    Actions.subVote(num);
+    Actions.getJimNo();
+  },
+
+  jimCall: function () {
+    var num = 0;
+    Actions.jimVote(num);
+    Actions.getSubNo();
+  },
+
   render: function () {
 
     var id = this.state.voteYes.map(function (item) {
@@ -21133,6 +21166,14 @@ var Parent = React.createClass({
       'hvr-grow': true
     });
 
+    var hide5 = classNames({
+      'invisible': this.state.invisible,
+      'visible': this.state.showImg5,
+      'fadeInUp': this.state.showImg5,
+      'animated': true,
+      'hvr-grow': true
+    });
+
     return React.createElement(
       'div',
       null,
@@ -21144,8 +21185,10 @@ var Parent = React.createClass({
       React.createElement('img', { className: hide2, onClick: this.phutCall, src: '../assets/img/pizzahut.png', id: 'foodright', alt: 'Pizza Hut', height: '394', width: '440' }),
       React.createElement('img', { className: hide3, onClick: this.arbyCall, src: '../assets/img/arbys.png', id: 'foodleft', alt: 'Arbys', height: '394', width: '440' }),
       React.createElement('img', { className: hide3, onClick: this.wendCall, src: '../assets/img/wendys.png', id: 'foodright', alt: 'Wendys', height: '394', width: '440' }),
-      React.createElement('img', { className: hide4, onClick: this.chicCall, src: '../assets/img/chickfila.png', id: 'foodleft', alt: 'chickfila', height: '394', width: '540' }),
+      React.createElement('img', { className: hide4, onClick: this.chicCall, src: '../assets/img/chickfila.png', id: 'foodleft', alt: 'Chickfila', height: '394', width: '540' }),
       React.createElement('img', { className: hide4, onClick: this.kfcCall, src: '../assets/img/kfc.png', id: 'foodright', alt: 'kfc', height: '394', width: '440' }),
+      React.createElement('img', { className: hide5, onClick: this.subCall, src: '../assets/img/subway.png', id: 'foodleft', alt: 'Subway', height: '394', width: '600' }),
+      React.createElement('img', { className: hide5, onClick: this.jimCall, src: '../assets/img/jimmyjohns.png', id: 'foodright', alt: 'Jimmy John\'s', height: '394', width: '440' }),
       React.createElement(
         'h1',
         { className: 'fadeInUp animated' },
@@ -21196,7 +21239,7 @@ ReactDOM.render(React.createElement(
 },{"./reflux/actions.jsx":181,"./reflux/no-store.jsx":182,"./reflux/votes-store.jsx":183,"classnames":2,"react":159,"react-dom":3,"reflux":176}],181:[function(require,module,exports){
 var Reflux = require('reflux');
 
-var Actions = Reflux.createActions(['bkVote', 'mcdVote', 'getMcdNo', 'getBkNo', 'domVote', 'getPhutNo', 'phutVote', 'getDomNo', 'arbyVote', 'getWendNo', 'wendVote', 'getArbyNo']);
+var Actions = Reflux.createActions(['bkVote', 'mcdVote', 'getMcdNo', 'getBkNo', 'domVote', 'getPhutNo', 'phutVote', 'getDomNo', 'arbyVote', 'getWendNo', 'wendVote', 'getArbyNo', 'chicVote', 'getKfcNo', 'kfcVote', 'getChicNo', 'subVote', 'getSubNo', 'jimVote', 'getJimNo']);
 
 module.exports = Actions;
 
@@ -21243,6 +21286,31 @@ var NoStore = Reflux.createStore({
       this.fireUpdateArbyNo();
     }.bind(this));
   },
+  getKfcNo: function () {
+    HTTP.get('/kfcYes').then(function (json) {
+      this.kfcNo = json;
+      this.fireUpdateKfcNo();
+    }.bind(this));
+  },
+  getChicNo: function () {
+    HTTP.get('/chicYes').then(function (json) {
+      this.chicNo = json;
+      this.fireUpdateChicNo();
+    }.bind(this));
+  },
+  getSubNo: function () {
+    HTTP.get('/subYes').then(function (json) {
+      this.subNo = json;
+      this.fireUpdateSubNo();
+    }.bind(this));
+  },
+  getJimNo: function () {
+    HTTP.get('/jimYes').then(function (json) {
+      this.jimNo = json;
+      this.fireUpdateJimNo();
+    }.bind(this));
+  },
+
   fireUpdateBkNo: function () {
     this.trigger('onChangeNo', this.mcdNo);
   },
@@ -21260,6 +21328,18 @@ var NoStore = Reflux.createStore({
   },
   fireUpdateArbyNo: function () {
     this.trigger('onChangeNo', this.arbyNo);
+  },
+  fireUpdateKfcNo: function () {
+    this.trigger('onChangeNo', this.kfcNo);
+  },
+  fireUpdateChicNo: function () {
+    this.trigger('onChangeNo', this.chicNo);
+  },
+  fireUpdateSubNo: function () {
+    this.trigger('onChangeNo', this.subNo);
+  },
+  fireUpdateJimNo: function () {
+    this.trigger('onChangeNo', this.jimNo);
   }
 });
 
@@ -21308,6 +21388,31 @@ var VotesStore = Reflux.createStore({
       this.fireUpdateWend();
     }.bind(this));
   },
+  getChicVotes: function () {
+    HTTP.get('/chicYes').then(function (json) {
+      this.chicYes = json;
+      this.fireUpdateChic();
+    }.bind(this));
+  },
+  getKfcVotes: function () {
+    HTTP.get('/kfcYes').then(function (json) {
+      this.kfcYes = json;
+      this.fireUpdateKfc();
+    }.bind(this));
+  },
+  getSubVotes: function () {
+    HTTP.get('/subYes').then(function (json) {
+      this.subYes = json;
+      this.fireUpdateSub();
+    }.bind(this));
+  },
+  getJimVotes: function () {
+    HTTP.get('/jimYes').then(function (json) {
+      this.jimYes = json;
+      this.fireUpdateJim();
+    }.bind(this));
+  },
+
   bkVote: function (num) {
     if (!this.bkYes) {
       this.bkYes = [];
@@ -21410,6 +21515,75 @@ var VotesStore = Reflux.createStore({
       this.getWendVotes();
     }.bind(this));
   },
+  chicVote: function (num) {
+    if (!this.chicYes) {
+      this.chicYes = [];
+    };
+
+    var aChicVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.chicYes.push(aChicVote);
+    this.fireUpdateChic();
+
+    HTTP.post('/chicYes', aChicVote).then(function (response) {
+      this.getChicVotes();
+    }.bind(this));
+  },
+  kfcVote: function (num) {
+    if (!this.kfcYes) {
+      this.kfcYes = [];
+    };
+
+    var aKfcVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.kfcYes.push(aKfcVote);
+    this.fireUpdateKfc();
+
+    HTTP.post('/kfcYes', aKfcVote).then(function (response) {
+      this.getKfcVotes();
+    }.bind(this));
+  },
+  subVote: function (num) {
+    if (!this.subYes) {
+      this.subYes = [];
+    };
+
+    var aSubVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.subYes.push(aSubVote);
+    this.fireUpdateSub();
+
+    HTTP.post('/subYes', aSubVote).then(function (response) {
+      this.getSubVotes();
+    }.bind(this));
+  },
+  jimVote: function (num) {
+    if (!this.jimYes) {
+      this.jimYes = [];
+    };
+
+    var aJimVote = {
+      "id": "",
+      "vote": num
+    };
+
+    this.jimYes.push(aJimVote);
+    this.fireUpdateJim();
+
+    HTTP.post('/jimYes', aJimVote).then(function (response) {
+      this.getJimVotes();
+    }.bind(this));
+  },
+
   fireUpdateBk: function () {
     this.trigger('onChangeYes', this.bkYes);
   },
@@ -21427,6 +21601,18 @@ var VotesStore = Reflux.createStore({
   },
   fireUpdateWend: function () {
     this.trigger('onChangeYes', this.wendYes);
+  },
+  fireUpdateChic: function () {
+    this.trigger('onChangeYes', this.chicYes);
+  },
+  fireUpdateKfc: function () {
+    this.trigger('onChangeYes', this.kfcYes);
+  },
+  fireUpdateSub: function () {
+    this.trigger('onChangeYes', this.subYes);
+  },
+  fireUpdateJim: function () {
+    this.trigger('onChangeYes', this.jimYes);
   }
 });
 

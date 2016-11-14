@@ -12,7 +12,15 @@ var Actions = Reflux.createActions([
     'arbyVote',
     'getWendNo',
     'wendVote',
-    'getArbyNo'
+    'getArbyNo',
+    'chicVote',
+    'getKfcNo',
+    'kfcVote',
+    'getChicNo',
+    'subVote',
+    'getSubNo',
+    'jimVote',
+    'getJimNo'
 ]);
 
 module.exports = Actions;

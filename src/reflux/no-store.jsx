@@ -46,6 +46,38 @@ var NoStore = Reflux.createStore({
         this.fireUpdateArbyNo();
       }.bind(this));
     },
+    getKfcNo: function() {
+      HTTP.get('/kfcYes')
+      .then(function(json){
+        this.kfcNo = json;
+        this.fireUpdateKfcNo();
+      }.bind(this));
+    },
+    getChicNo: function() {
+      HTTP.get('/chicYes')
+      .then(function(json){
+        this.chicNo = json;
+        this.fireUpdateChicNo();
+      }.bind(this));
+    },
+    getSubNo: function() {
+      HTTP.get('/subYes')
+      .then(function(json){
+        this.subNo = json;
+        this.fireUpdateSubNo();
+      }.bind(this));
+    },
+    getJimNo: function() {
+      HTTP.get('/jimYes')
+      .then(function(json){
+        this.jimNo = json;
+        this.fireUpdateJimNo();
+      }.bind(this));
+    },
+
+
+
+
     fireUpdateBkNo: function() {
       this.trigger('onChangeNo', this.mcdNo);
     },
@@ -63,6 +95,18 @@ var NoStore = Reflux.createStore({
     },
     fireUpdateArbyNo: function() {
       this.trigger('onChangeNo', this.arbyNo);
+    },
+    fireUpdateKfcNo: function() {
+      this.trigger('onChangeNo', this.kfcNo);
+    },
+    fireUpdateChicNo: function() {
+      this.trigger('onChangeNo', this.chicNo);
+    },
+    fireUpdateSubNo: function() {
+      this.trigger('onChangeNo', this.subNo);
+    },
+    fireUpdateJimNo: function() {
+      this.trigger('onChangeNo', this.jimNo);
     }
 });
 
