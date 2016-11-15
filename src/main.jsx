@@ -165,7 +165,7 @@ var Parent = React.createClass({
       render: function() {
 
         var id = this.state.voteYes.map(function(item) {
-            return <YesVotes key={item.id} yes={item.id} />;
+            return <YesVotes key={item.id} yes={item._id} />;
         });
 
         var no = this.state.voteNo.map(function(item) {
