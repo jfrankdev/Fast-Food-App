@@ -21150,7 +21150,7 @@ var Parent = React.createClass({
   render: function () {
 
     var id = this.state.voteYes.map(function (item) {
-      return React.createElement(YesVotes, { key: item.id, yes: item._id });
+      return React.createElement(YesVotes, { key: item.id, yes: item.id });
     });
 
     var no = this.state.voteNo.map(function (item) {
@@ -21380,7 +21380,7 @@ var Actions = require('./actions.jsx');
 var VotesStore = Reflux.createStore({
   listenables: [Actions],
   getBkVotes: function () {
-    HTTP.get('/users').then(function (json) {
+    HTTP.get('/bkyes').then(function (json) {
       this.bkYes = json;
       this.fireUpdateBk();
     }.bind(this));

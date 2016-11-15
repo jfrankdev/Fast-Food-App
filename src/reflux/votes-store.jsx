@@ -5,7 +5,7 @@ var Actions = require('./actions.jsx');
 var VotesStore = Reflux.createStore({
     listenables: [Actions],
     getBkVotes: function() {
-      HTTP.get('/users')
+      HTTP.get('/bkyes')
       .then(function(json){
         this.bkYes = json;
         this.fireUpdateBk();
