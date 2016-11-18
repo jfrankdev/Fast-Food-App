@@ -52,6 +52,23 @@
   -webkit-animation-iteration-count: infinite;
 }
 
+#mobiletext{
+  position: absolute;
+ top: 15%;
+left: 15%;
+ margin-top: -50px;
+ margin-right: 250px;
+    text-align: center;
+   color: white;
+   font-family: Helvetica;
+font-size: 3.0vh;
+   font-weight: 500;
+}
+@media (min-width: 960px) {
+#mobiletext{
+  display: none;
+}}
+
 img {
     cursor: pointer;
   }
@@ -77,5 +94,8 @@ body {
   background: #ffcf32;
    overflow-x: hidden;
    overflow-y: hidden;
-
 }
+@media (max-width: 960px) {
+#app {
+    display: none;
+}}
