@@ -20710,6 +20710,16 @@ module.exports = function(listenables){
     return promise
   }
 
+  function readArrayBufferAsText(buf) {
+    var view = new Uint8Array(buf)
+    var chars = new Array(view.length)
+
+    for (var i = 0; i < view.length; i++) {
+      chars[i] = String.fromCharCode(view[i])
+    }
+    return chars.join('')
+  }
+
   function bufferClone(buf) {
     if (buf.slice) {
       return buf.slice(0)
@@ -20773,6 +20783,14 @@ module.exports = function(listenables){
           return Promise.resolve(new Blob([this._bodyText]))
         }
       }
+
+      this.arrayBuffer = function() {
+        if (this._bodyArrayBuffer) {
+          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
+        } else {
+          return this.blob().then(readBlobAsArrayBuffer)
+        }
+      }
     }
 
     this.text = function() {
@@ -20784,23 +20802,11 @@ module.exports = function(listenables){
       if (this._bodyBlob) {
         return readBlobAsText(this._bodyBlob)
       } else if (this._bodyArrayBuffer) {
-        var view = new Uint8Array(this._bodyArrayBuffer)
-        var str = String.fromCharCode.apply(null, view)
-        return Promise.resolve(str)
+        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer))
       } else if (this._bodyFormData) {
         throw new Error('could not read FormData body as text')
       } else {
         return Promise.resolve(this._bodyText)
-      }
-    }
-
-    if (support.arrayBuffer) {
-      this.arrayBuffer = function() {
-        if (this._bodyArrayBuffer) {
-          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
-        } else {
-          return this.blob().then(readBlobAsArrayBuffer)
-        }
       }
     }
 
@@ -21093,6 +21099,19 @@ var Parent = React.createClass({
     Actions.getMcdNo();
   },
 
+  testCall: function (e) {
+
+    var aBkVote = {
+      "title": "hello",
+      "content": "hello",
+      "author": "hello"
+    };
+
+    HTTP.post('/insert', aBkVote).then(function (response) {
+      //this.getBkVotes();
+    }.bind(this));
+  },
+
   mcdCall: function () {
     var num = 0;
     Actions.mcdVote(num);
@@ -21236,7 +21255,8 @@ var Parent = React.createClass({
         ' other voters agree with you, ',
         no,
         ' others do not.'
-      )
+      ),
+      React.createElement('input', { type: 'button', value: 'Click me', onClick: this.testCall })
     );
   }
 
@@ -21446,14 +21466,14 @@ var VotesStore = Reflux.createStore({
     };
 
     var aBkVote = {
-      "id": "",
-      "vote": num
+      "id": "hello",
+      "vote": 5 //used to be the var num
     };
 
     this.bkYes.push(aBkVote);
     this.fireUpdateBk();
 
-    HTTP.post('/bkYes', aBkVote).then(function (response) {
+    HTTP.post('/bkyes', aBkVote).then(function (response) {
       this.getBkVotes();
     }.bind(this));
   },

@@ -86,14 +86,14 @@ var VotesStore = Reflux.createStore({
       };
 
       var aBkVote = {
-        "id": "",
-        "vote": num
+        "id": "hello",
+        "vote": 5 //used to be the var num
       };
 
       this.bkYes.push(aBkVote);
       this.fireUpdateBk();
 
-      HTTP.post('/bkYes', aBkVote)
+      HTTP.post('/bkyes', aBkVote)
       .then(function(response) {
         this.getBkVotes();
       }.bind(this));

@@ -107,6 +107,20 @@ var Parent = React.createClass({
         Actions.getMcdNo();
       },
 
+      testCall: function (e) {
+
+        var aBkVote = {
+          "title": "hello",
+          "content": "hello",
+          "author": "hello"
+        };
+
+        HTTP.post('/insert', aBkVote)
+        .then(function(response) {
+          //this.getBkVotes();
+        }.bind(this));
+      },
+
       mcdCall: function () {
         var num = 0;
         Actions.mcdVote(num);
@@ -235,6 +249,7 @@ var Parent = React.createClass({
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
         <p className="fadeInUp animated">Click one</p>
         <h2 className="invisible">You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>
+        <input type="button" value="Click me" onClick={this.testCall}></input>
               </div>
       )
 
