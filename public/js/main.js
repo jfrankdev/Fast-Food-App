@@ -21093,76 +21093,53 @@ var Parent = React.createClass({
     }
   },
 
-  bkCall: function (e) {
-    var num = 0;
-    Actions.bkVote(num);
+  bkCall: function () {
+    Actions.bkVote();
     Actions.getMcdNo();
   },
 
-  testCall: function (e) {
-
-    var aBkVote = {
-      "title": "hello",
-      "content": "hello",
-      "author": "hello"
-    };
-
-    HTTP.post('/insert', aBkVote).then(function (response) {
-      //this.getBkVotes();
-    }.bind(this));
-  },
-
   mcdCall: function () {
-    var num = 0;
-    Actions.mcdVote(num);
+    Actions.mcdVote();
     Actions.getBkNo();
   },
 
   domCall: function () {
-    var num = 0;
-    Actions.domVote(num);
+    Actions.domVote();
     Actions.getPhutNo();
   },
 
   phutCall: function () {
-    var num = 0;
-    Actions.phutVote(num);
+    Actions.phutVote();
     Actions.getDomNo();
   },
 
   arbyCall: function () {
-    var num = 0;
-    Actions.arbyVote(num);
+    Actions.arbyVote();
     Actions.getWendNo();
   },
 
   wendCall: function () {
-    var num = 0;
-    Actions.wendVote(num);
+    Actions.wendVote();
     Actions.getArbyNo();
   },
 
   chicCall: function () {
-    var num = 0;
-    Actions.chicVote(num);
+    Actions.chicVote();
     Actions.getKfcNo();
   },
 
   kfcCall: function () {
-    var num = 0;
-    Actions.kfcVote(num);
+    Actions.kfcVote();
     Actions.getChicNo();
   },
 
   subCall: function () {
-    var num = 0;
-    Actions.subVote(num);
+    Actions.subVote();
     Actions.getJimNo();
   },
 
   jimCall: function () {
-    var num = 0;
-    Actions.jimVote(num);
+    Actions.jimVote();
     Actions.getSubNo();
   },
 
@@ -21255,8 +21232,7 @@ var Parent = React.createClass({
         ' other voters agree with you, ',
         no,
         ' others do not.'
-      ),
-      React.createElement('input', { type: 'button', value: 'Click me', onClick: this.testCall })
+      )
     );
   }
 
@@ -21298,61 +21274,61 @@ var Actions = require('./actions.jsx');
 var NoStore = Reflux.createStore({
   listenables: [Actions],
   getMcdNo: function () {
-    HTTP.get('/mcdYes').then(function (json) {
+    HTTP.get('/mcdyes').then(function (json) {
       this.mcdNo = json;
       this.fireUpdateBkNo();
     }.bind(this));
   },
   getBkNo: function () {
-    HTTP.get('/bkYes').then(function (json) {
+    HTTP.get('/bkyes').then(function (json) {
       this.bkNo = json;
       this.fireUpdateMcdNo();
     }.bind(this));
   },
   getPhutNo: function () {
-    HTTP.get('/phutYes').then(function (json) {
+    HTTP.get('/phutyes').then(function (json) {
       this.phutNo = json;
       this.fireUpdatePhutNo();
     }.bind(this));
   },
   getDomNo: function () {
-    HTTP.get('/domYes').then(function (json) {
+    HTTP.get('/domyes').then(function (json) {
       this.domNo = json;
       this.fireUpdateDomNo();
     }.bind(this));
   },
   getWendNo: function () {
-    HTTP.get('/wendYes').then(function (json) {
+    HTTP.get('/wendyes').then(function (json) {
       this.wendNo = json;
       this.fireUpdateWendNo();
     }.bind(this));
   },
   getArbyNo: function () {
-    HTTP.get('/arbyYes').then(function (json) {
+    HTTP.get('/arbyyes').then(function (json) {
       this.arbyNo = json;
       this.fireUpdateArbyNo();
     }.bind(this));
   },
   getKfcNo: function () {
-    HTTP.get('/kfcYes').then(function (json) {
+    HTTP.get('/kfcyes').then(function (json) {
       this.kfcNo = json;
       this.fireUpdateKfcNo();
     }.bind(this));
   },
   getChicNo: function () {
-    HTTP.get('/chicYes').then(function (json) {
+    HTTP.get('/chicyes').then(function (json) {
       this.chicNo = json;
       this.fireUpdateChicNo();
     }.bind(this));
   },
   getSubNo: function () {
-    HTTP.get('/subYes').then(function (json) {
+    HTTP.get('/subyes').then(function (json) {
       this.subNo = json;
       this.fireUpdateSubNo();
     }.bind(this));
   },
   getJimNo: function () {
-    HTTP.get('/jimYes').then(function (json) {
+    HTTP.get('/jimyes').then(function (json) {
       this.jimNo = json;
       this.fireUpdateJimNo();
     }.bind(this));
@@ -21406,227 +21382,167 @@ var VotesStore = Reflux.createStore({
     }.bind(this));
   },
   getMcdVotes: function () {
-    HTTP.get('/mcdYes').then(function (json) {
+    HTTP.get('/mcdyes').then(function (json) {
       this.mcdYes = json;
       this.fireUpdateMcd();
     }.bind(this));
   },
   getDomVotes: function () {
-    HTTP.get('/domYes').then(function (json) {
+    HTTP.get('/domyes').then(function (json) {
       this.domYes = json;
       this.fireUpdateDom();
     }.bind(this));
   },
   getPhutVotes: function () {
-    HTTP.get('/phutYes').then(function (json) {
+    HTTP.get('/phutyes').then(function (json) {
       this.phutYes = json;
       this.fireUpdatePhut();
     }.bind(this));
   },
   getArbyVotes: function () {
-    HTTP.get('/arbyYes').then(function (json) {
+    HTTP.get('/arbyyes').then(function (json) {
       this.arbyYes = json;
       this.fireUpdateArby();
     }.bind(this));
   },
   getWendVotes: function () {
-    HTTP.get('/wendYes').then(function (json) {
+    HTTP.get('/wendyes').then(function (json) {
       this.wendYes = json;
       this.fireUpdateWend();
     }.bind(this));
   },
   getChicVotes: function () {
-    HTTP.get('/chicYes').then(function (json) {
+    HTTP.get('/chicyes').then(function (json) {
       this.chicYes = json;
       this.fireUpdateChic();
     }.bind(this));
   },
   getKfcVotes: function () {
-    HTTP.get('/kfcYes').then(function (json) {
+    HTTP.get('/kfcyes').then(function (json) {
       this.kfcYes = json;
       this.fireUpdateKfc();
     }.bind(this));
   },
   getSubVotes: function () {
-    HTTP.get('/subYes').then(function (json) {
+    HTTP.get('/subyes').then(function (json) {
       this.subYes = json;
       this.fireUpdateSub();
     }.bind(this));
   },
   getJimVotes: function () {
-    HTTP.get('/jimYes').then(function (json) {
+    HTTP.get('/jimyes').then(function (json) {
       this.jimYes = json;
       this.fireUpdateJim();
     }.bind(this));
   },
 
-  bkVote: function (num) {
+  bkVote: function () {
+    this.getBkVotes();
+
     if (!this.bkYes) {
       this.bkYes = [];
     };
 
-    var aBkVote = {
-      "id": "hello",
-      "vote": 5 //used to be the var num
-    };
-
-    this.bkYes.push(aBkVote);
-    this.fireUpdateBk();
-
-    HTTP.post('/bkyes', aBkVote).then(function (response) {
+    HTTP.post('/bkyes').then(function (response) {
       this.getBkVotes();
     }.bind(this));
   },
   mcdVote: function (num) {
+    this.getMcdVotes();
+
     if (!this.mcdYes) {
       this.mcdYes = [];
     };
 
-    var aMcdVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.mcdYes.push(aMcdVote);
-    this.fireUpdateMcd();
-
-    HTTP.post('/mcdYes', aMcdVote).then(function (response) {
+    HTTP.post('/mcdyes').then(function (response) {
       this.getMcdVotes();
     }.bind(this));
   },
   domVote: function (num) {
+    this.getDomVotes();
+
     if (!this.domYes) {
       this.domYes = [];
     };
 
-    var aDomVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.domYes.push(aDomVote);
-    this.fireUpdateDom();
-
-    HTTP.post('/domYes', aDomVote).then(function (response) {
+    HTTP.post('/domyes').then(function (response) {
       this.getDomVotes();
     }.bind(this));
   },
   phutVote: function (num) {
+    this.getPhutVotes();
+
     if (!this.phutYes) {
       this.phutYes = [];
     };
 
-    var aPhutVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.phutYes.push(aPhutVote);
-    this.fireUpdatePhut();
-
-    HTTP.post('/phutYes', aPhutVote).then(function (response) {
+    HTTP.post('/phutyes').then(function (response) {
       this.getPhutVotes();
     }.bind(this));
   },
   arbyVote: function (num) {
+    this.getArbyVotes();
+
     if (!this.arbyYes) {
       this.arbyYes = [];
     };
 
-    var aArbyVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.arbyYes.push(aArbyVote);
-    this.fireUpdateArby();
-
-    HTTP.post('/arbyYes', aArbyVote).then(function (response) {
+    HTTP.post('/arbyyes').then(function (response) {
       this.getArbyVotes();
     }.bind(this));
   },
   wendVote: function (num) {
+    this.getWendVotes();
+
     if (!this.wendYes) {
       this.wendYes = [];
     };
 
-    var aWendVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.wendYes.push(aWendVote);
-    this.fireUpdateWend();
-
-    HTTP.post('/wendYes', aWendVote).then(function (response) {
+    HTTP.post('/wendyes').then(function (response) {
       this.getWendVotes();
     }.bind(this));
   },
   chicVote: function (num) {
+    this.getChicVotes();
+
     if (!this.chicYes) {
       this.chicYes = [];
     };
 
-    var aChicVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.chicYes.push(aChicVote);
-    this.fireUpdateChic();
-
-    HTTP.post('/chicYes', aChicVote).then(function (response) {
+    HTTP.post('/chicyes').then(function (response) {
       this.getChicVotes();
     }.bind(this));
   },
   kfcVote: function (num) {
+    this.getKfcVotes();
+
     if (!this.kfcYes) {
       this.kfcYes = [];
     };
 
-    var aKfcVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.kfcYes.push(aKfcVote);
-    this.fireUpdateKfc();
-
-    HTTP.post('/kfcYes', aKfcVote).then(function (response) {
+    HTTP.post('/kfcyes', aKfcVote).then(function (response) {
       this.getKfcVotes();
     }.bind(this));
   },
   subVote: function (num) {
+    this.getSubVotes();
+
     if (!this.subYes) {
       this.subYes = [];
     };
 
-    var aSubVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.subYes.push(aSubVote);
-    this.fireUpdateSub();
-
-    HTTP.post('/subYes', aSubVote).then(function (response) {
+    HTTP.post('/subyes').then(function (response) {
       this.getSubVotes();
     }.bind(this));
   },
   jimVote: function (num) {
+    this.getJimVotes();
+
     if (!this.jimYes) {
       this.jimYes = [];
     };
 
-    var aJimVote = {
-      "id": "",
-      "vote": num
-    };
-
-    this.jimYes.push(aJimVote);
-    this.fireUpdateJim();
-
-    HTTP.post('/jimYes', aJimVote).then(function (response) {
+    HTTP.post('/jimyes').then(function (response) {
       this.getJimVotes();
     }.bind(this));
   },

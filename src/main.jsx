@@ -101,77 +101,53 @@ var Parent = React.createClass({
         }
     },
 
-      bkCall: function (e) {
-        var num = 0;
-        Actions.bkVote(num);
+      bkCall: function () {
+        Actions.bkVote();
         Actions.getMcdNo();
       },
 
-      testCall: function (e) {
-
-        var aBkVote = {
-          "title": "hello",
-          "content": "hello",
-          "author": "hello"
-        };
-
-        HTTP.post('/insert', aBkVote)
-        .then(function(response) {
-          //this.getBkVotes();
-        }.bind(this));
-      },
-
       mcdCall: function () {
-        var num = 0;
-        Actions.mcdVote(num);
+        Actions.mcdVote();
         Actions.getBkNo();
       },
 
       domCall: function () {
-        var num = 0;
-        Actions.domVote(num);
+        Actions.domVote();
         Actions.getPhutNo();
       },
 
       phutCall: function () {
-        var num = 0;
-        Actions.phutVote(num);
+        Actions.phutVote();
         Actions.getDomNo();
       },
 
       arbyCall: function () {
-        var num = 0;
-        Actions.arbyVote(num);
+        Actions.arbyVote();
         Actions.getWendNo();
       },
 
       wendCall: function () {
-        var num = 0;
-        Actions.wendVote(num);
+        Actions.wendVote();
         Actions.getArbyNo();
       },
 
       chicCall: function () {
-        var num = 0;
-        Actions.chicVote(num);
+        Actions.chicVote();
         Actions.getKfcNo();
       },
 
       kfcCall: function () {
-        var num = 0;
-        Actions.kfcVote(num);
+        Actions.kfcVote();
         Actions.getChicNo();
       },
 
       subCall: function () {
-        var num = 0;
-        Actions.subVote(num);
+        Actions.subVote();
         Actions.getJimNo();
       },
 
       jimCall: function () {
-        var num = 0;
-        Actions.jimVote(num);
+        Actions.jimVote();
         Actions.getSubNo();
 
       },
@@ -249,7 +225,6 @@ var Parent = React.createClass({
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
         <p className="fadeInUp animated">Click one</p>
         <h2 className="invisible">You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>
-        <input type="button" value="Click me" onClick={this.testCall}></input>
               </div>
       )
 

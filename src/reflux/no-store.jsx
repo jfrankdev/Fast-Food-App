@@ -5,70 +5,70 @@ var Actions = require('./actions.jsx');
 var NoStore = Reflux.createStore({
     listenables: [Actions],
     getMcdNo: function() {
-      HTTP.get('/mcdYes')
+      HTTP.get('/mcdyes')
       .then(function(json){
         this.mcdNo = json;
         this.fireUpdateBkNo();
       }.bind(this));
     },
     getBkNo: function() {
-      HTTP.get('/bkYes')
+      HTTP.get('/bkyes')
       .then(function(json){
         this.bkNo = json;
         this.fireUpdateMcdNo();
       }.bind(this));
     },
     getPhutNo: function() {
-      HTTP.get('/phutYes')
+      HTTP.get('/phutyes')
       .then(function(json){
         this.phutNo = json;
         this.fireUpdatePhutNo();
       }.bind(this));
     },
     getDomNo: function() {
-      HTTP.get('/domYes')
+      HTTP.get('/domyes')
       .then(function(json){
         this.domNo = json;
         this.fireUpdateDomNo();
       }.bind(this));
     },
     getWendNo: function() {
-      HTTP.get('/wendYes')
+      HTTP.get('/wendyes')
       .then(function(json){
         this.wendNo = json;
         this.fireUpdateWendNo();
       }.bind(this));
     },
     getArbyNo: function() {
-      HTTP.get('/arbyYes')
+      HTTP.get('/arbyyes')
       .then(function(json){
         this.arbyNo = json;
         this.fireUpdateArbyNo();
       }.bind(this));
     },
     getKfcNo: function() {
-      HTTP.get('/kfcYes')
+      HTTP.get('/kfcyes')
       .then(function(json){
         this.kfcNo = json;
         this.fireUpdateKfcNo();
       }.bind(this));
     },
     getChicNo: function() {
-      HTTP.get('/chicYes')
+      HTTP.get('/chicyes')
       .then(function(json){
         this.chicNo = json;
         this.fireUpdateChicNo();
       }.bind(this));
     },
     getSubNo: function() {
-      HTTP.get('/subYes')
+      HTTP.get('/subyes')
       .then(function(json){
         this.subNo = json;
         this.fireUpdateSubNo();
       }.bind(this));
     },
     getJimNo: function() {
-      HTTP.get('/jimYes')
+      HTTP.get('/jimyes')
       .then(function(json){
         this.jimNo = json;
         this.fireUpdateJimNo();
