@@ -31,6 +31,50 @@ var YesVotes = React.createClass({
      }
   });
 
+  var LeftSwipe = React.createClass({
+      render: function() {
+        var swipeClasses = classNames({
+          'invisible': this.props.showArrow,
+          'fa': true,
+          'fa-angle-double-left': true,
+          'fa-5x': true,
+          'hvr-grow': true
+          });
+          return (
+  <i id="page-left" onClick={this.props.leftArrow} className={swipeClasses}></i>
+          );
+      }
+  });
+
+  var RightSwipe = React.createClass({
+      render: function() {
+        var rSwipeClasses = classNames({
+          'invisible': this.props.showRArrow,
+          'fa': true,
+          'fa-angle-double-right': true,
+          'fa-5x': true,
+          'hvr-grow': true
+          });
+          return (
+  <i id="page-right" onClick={this.props.rightArrow} className={rSwipeClasses}></i>
+          );
+      }
+  });
+
+  var RedoSwipe = React.createClass({
+      render: function() {
+        var redoClasses = classNames({
+          'invisible': this.props.showRedoArrow,
+          'fa': true,
+          'fa-undo': true,
+          'fa-3x': true,
+          'hvr-grow': true
+          });
+          return (
+  <i id="page-right-redo" onClick={this.props.redoArrow} className={redoClasses}></i>
+          );
+      }
+  });
 
 var Parent = React.createClass({
       mixins: [
@@ -43,6 +87,8 @@ var Parent = React.createClass({
           voteYes: [],
           voteNo: [],
           hideLeftArrow: true,
+          hideRightArrow: false,
+          hideRedoArrow: true,
           invisible: true,
           showImg1: true,
           showImg2: false,
@@ -76,6 +122,8 @@ var Parent = React.createClass({
           this.setState({showImg4:true});
         }
         if(this.state.showImg4){
+          this.setState({hideRightArrow:true});
+          this.setState({hideRedoArrow:false});
           this.setState({showImg4:false});
           this.setState({showImg5:true});
         }
@@ -83,6 +131,8 @@ var Parent = React.createClass({
 
       changeimgLeft: function () {
         if(this.state.showImg5){
+          this.setState({hideRedoArrow:true});
+          this.setState({hideRightArrow:false});
           this.setState({showImg5:false});
           this.setState({showImg4:true});
         }
@@ -99,6 +149,14 @@ var Parent = React.createClass({
           this.setState({showImg2:false});
           this.setState({showImg1:true});
         }
+    },
+
+    changeimgRedo: function() {
+          this.setState({hideRedoArrow:true});
+          this.setState({showImg5:false});
+          this.setState({showImg1:true});
+          this.setState({hideLeftArrow:true});
+          this.setState({hideRightArrow:false});
     },
 
       bkCall: function () {
@@ -208,10 +266,10 @@ var Parent = React.createClass({
           });
 
 
-
       return ( <div>
-        <i id="page-right" onClick={this.changeimgRight} className="fa fa-angle-double-right fa-5x hvr-grow"></i>
           <LeftSwipe leftArrow={this.changeimgLeft} showArrow={this.state.hideLeftArrow}/>
+          <RightSwipe rightArrow={this.changeimgRight} showRArrow={this.state.hideRightArrow}/>
+          <RedoSwipe redoArrow={this.changeimgRedo} showRedoArrow={this.state.hideRedoArrow}/>
         <img className={hide1} onClick={this.bkCall} src="../assets/img/burgerking.png" id="foodleft" alt="Burger King" height="394" width="440"></img>
         <img className={hide1} onClick={this.mcdCall} src="../assets/img/mcdonalds.png" id="foodright" alt="McDonalds" height="394" width="440"></img>
         <img className={hide2} onClick={this.domCall} src="../assets/img/dominos.png" id="foodleft" alt="Dominos" height="394" width="440"></img>
@@ -232,20 +290,6 @@ var Parent = React.createClass({
 
 });
 
-var LeftSwipe = React.createClass({
-    render: function() {
-      var swipeClasses = classNames({
-        'invisible': this.props.showArrow,
-        'fa': true,
-        'fa-angle-double-left': true,
-        'fa-5x': true,
-        'hvr-grow': true
-        });
-        return (
-<i id="page-left" onClick={this.props.leftArrow} className={swipeClasses}></i>
-        );
-    }
-});
 
 ReactDOM.render(<div>
   <Parent />

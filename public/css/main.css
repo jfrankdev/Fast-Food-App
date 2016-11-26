@@ -33,6 +33,14 @@
     top: 200px;
    }
 
+   #page-right-redo {
+     cursor: pointer;
+     float: right;
+     position: relative;
+     top: 215px;
+     left: 37px;
+    }
+
    #page-left {
      cursor: pointer;
      float: left;
