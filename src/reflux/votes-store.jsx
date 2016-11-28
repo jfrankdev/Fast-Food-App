@@ -88,7 +88,7 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    mcdVote: function(num) {
+    mcdVote: function() {
       this.getMcdVotes();
 
       if (!this.mcdYes) {
@@ -101,7 +101,7 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    domVote: function(num) {
+    domVote: function() {
       this.getDomVotes();
 
       if (!this.domYes) {
@@ -114,7 +114,7 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    phutVote: function(num) {
+    phutVote: function() {
       this.getPhutVotes();
 
       if (!this.phutYes) {
@@ -127,7 +127,7 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    arbyVote: function(num) {
+    arbyVote: function() {
       this.getArbyVotes();
 
       if (!this.arbyYes) {
@@ -140,7 +140,7 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    wendVote: function(num) {
+    wendVote: function() {
       this.getWendVotes();
 
       if (!this.wendYes) {
@@ -153,7 +153,7 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    chicVote: function(num) {
+    chicVote: function() {
       this.getChicVotes();
 
       if (!this.chicYes) {
@@ -166,20 +166,20 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    kfcVote: function(num) {
+    kfcVote: function() {
       this.getKfcVotes();
 
       if (!this.kfcYes) {
         this.kfcYes = [];
       };
 
-      HTTP.post('/kfcyes', aKfcVote)
+      HTTP.post('/kfcyes')
       .then(function(response) {
         this.getKfcVotes();
       }.bind(this));
 
     },
-    subVote: function(num) {
+    subVote: function() {
       this.getSubVotes();
 
       if (!this.subYes) {
@@ -192,7 +192,7 @@ var VotesStore = Reflux.createStore({
       }.bind(this));
 
     },
-    jimVote: function(num) {
+    jimVote: function() {
       this.getJimVotes();
 
       if (!this.jimYes) {
