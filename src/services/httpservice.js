@@ -1,5 +1,5 @@
 var Fetch = require('whatwg-fetch');
-var baseUrl = 'http://localhost:3000';
+var baseUrl = 'http://138.197.205.37:3000';
 
 var service = {
     get: function(url) {

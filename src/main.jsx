@@ -270,16 +270,16 @@ var Parent = React.createClass({
           <LeftSwipe leftArrow={this.changeimgLeft} showArrow={this.state.hideLeftArrow}/>
           <RightSwipe rightArrow={this.changeimgRight} showRArrow={this.state.hideRightArrow}/>
           <RedoSwipe redoArrow={this.changeimgRedo} showRedoArrow={this.state.hideRedoArrow}/>
-        <img className={hide1} onClick={this.bkCall} src="../assets/img/burgerking.png" id="foodleft" alt="Burger King" height="394" width="440"></img>
-        <img className={hide1} onClick={this.mcdCall} src="../assets/img/mcdonalds.png" id="foodright" alt="McDonalds" height="394" width="440"></img>
-        <img className={hide2} onClick={this.domCall} src="../assets/img/dominos.png" id="foodleft" alt="Dominos" height="394" width="440"></img>
-        <img className={hide2} onClick={this.phutCall} src="../assets/img/pizzahut.png" id="foodright" alt="Pizza Hut" height="394" width="440"></img>
-        <img className={hide3} onClick={this.arbyCall} src="../assets/img/arbys.png" id="foodleft" alt="Arbys" height="394" width="440"></img>
-        <img className={hide3} onClick={this.wendCall} src="../assets/img/wendys.png" id="foodright" alt="Wendys" height="394" width="440"></img>
-        <img className={hide4} onClick={this.chicCall} src="../assets/img/chickfila.png" id="foodleft" alt="Chickfila" height="394" width="540"></img>
-        <img className={hide4} onClick={this.kfcCall} src="../assets/img/kfc.png" id="foodright" alt="kfc" height="394" width="440"></img>
-        <img className={hide5} onClick={this.subCall} src="../assets/img/subway.png" id="foodleft" alt="Subway" height="394" width="600"></img>
-        <img className={hide5} onClick={this.jimCall} src="../assets/img/jimmyjohns.png" id="foodright" alt="Jimmy John's" height="394" width="440"></img>
+        <img className={hide1} onClick={this.bkCall} src="assets/img/burgerking.png" id="foodleft" alt="Burger King" height="394" width="440"></img>
+        <img className={hide1} onClick={this.mcdCall} src="assets/img/mcdonalds.png" id="foodright" alt="McDonalds" height="394" width="440"></img>
+        <img className={hide2} onClick={this.domCall} src="assets/img/dominos.png" id="foodleft" alt="Dominos" height="394" width="440"></img>
+        <img className={hide2} onClick={this.phutCall} src="assets/img/pizzahut.png" id="foodright" alt="Pizza Hut" height="394" width="440"></img>
+        <img className={hide3} onClick={this.arbyCall} src="assets/img/arbys.png" id="foodleft" alt="Arbys" height="394" width="440"></img>
+        <img className={hide3} onClick={this.wendCall} src="assets/img/wendys.png" id="foodright" alt="Wendys" height="394" width="440"></img>
+        <img className={hide4} onClick={this.chicCall} src="assets/img/chickfila.png" id="foodleft" alt="Chickfila" height="394" width="540"></img>
+        <img className={hide4} onClick={this.kfcCall} src="assets/img/kfc.png" id="foodright" alt="kfc" height="394" width="440"></img>
+        <img className={hide5} onClick={this.subCall} src="assets/img/subway.png" id="foodleft" alt="Subway" height="394" width="600"></img>
+        <img className={hide5} onClick={this.jimCall} src="assets/img/jimmyjohns.png" id="foodright" alt="Jimmy John's" height="394" width="440"></img>
         <h1 className="fadeInUp animated">Which do you prefer??</h1>
         <p className="fadeInUp animated">Click one</p>
         <h2 className="invisible">You chose {id}. {yes} other voters agree with you, {no} others do not.</h2>
