@@ -1,17 +1,25 @@
 function delayLoad() {
 $('img').removeClass('fadeInUp animated');
 }
-
 function clickDelayLoad() {
 $('img').removeClass('fadeInUp animated');
 }
-
 function delayAddAnimate() {
 $('h2').removeClass('fadeInUp animated');
 }
+function delayFunc() {
+$('h2').addClass('visible fadeInUp animated');
+setTimeout(delayAddAnimate, 1000);
+}
+function delayImgLoad() {
+$('#BurgerKing, #McDonalds').addClass('visible fadeInUp animated hvr-grow');
+}
 // document ready
 $(function() {
-    setTimeout(delayLoad, 1000);
+  $('#BurgerKing, #McDonalds').removeClass('visible fadeInUp animated hvr-grow');
+    setTimeout(delayImgLoad, 500);
+
+    setTimeout(delayLoad, 2000);
 
     $('i').click(function(){
       $('h2').removeClass('visible fadeInUp animated');
@@ -20,9 +28,7 @@ $(function() {
     });
 
     $('img').click(function(){
-      $('h2').removeClass('invisible');
-      $('h2').addClass('visible fadeInUp animated');
-      setTimeout(delayAddAnimate, 1000);
-
+      $('h2').removeClass('visible');
+      setTimeout(delayFunc, 250);
     });
 });
