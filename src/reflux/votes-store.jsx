@@ -76,7 +76,6 @@ var VotesStore = Reflux.createStore({
     },
 
     bkVote: function() {
-      this.getBkVotes();
 
       if (!this.bkYes) {
         this.bkYes = [];
@@ -89,7 +88,6 @@ var VotesStore = Reflux.createStore({
 
     },
     mcdVote: function() {
-      this.getMcdVotes();
 
       if (!this.mcdYes) {
         this.mcdYes = [];
@@ -102,7 +100,6 @@ var VotesStore = Reflux.createStore({
 
     },
     domVote: function() {
-      this.getDomVotes();
 
       if (!this.domYes) {
         this.domYes = [];
@@ -115,7 +112,6 @@ var VotesStore = Reflux.createStore({
 
     },
     phutVote: function() {
-      this.getPhutVotes();
 
       if (!this.phutYes) {
         this.phutYes = [];
@@ -128,7 +124,6 @@ var VotesStore = Reflux.createStore({
 
     },
     arbyVote: function() {
-      this.getArbyVotes();
 
       if (!this.arbyYes) {
         this.arbyYes = [];
@@ -141,7 +136,6 @@ var VotesStore = Reflux.createStore({
 
     },
     wendVote: function() {
-      this.getWendVotes();
 
       if (!this.wendYes) {
         this.wendYes = [];
@@ -154,7 +148,6 @@ var VotesStore = Reflux.createStore({
 
     },
     chicVote: function() {
-      this.getChicVotes();
 
       if (!this.chicYes) {
         this.chicYes = [];
@@ -167,7 +160,6 @@ var VotesStore = Reflux.createStore({
 
     },
     kfcVote: function() {
-      this.getKfcVotes();
 
       if (!this.kfcYes) {
         this.kfcYes = [];
@@ -180,7 +172,6 @@ var VotesStore = Reflux.createStore({
 
     },
     subVote: function() {
-      this.getSubVotes();
 
       if (!this.subYes) {
         this.subYes = [];
@@ -193,7 +184,6 @@ var VotesStore = Reflux.createStore({
 
     },
     jimVote: function() {
-      this.getJimVotes();
 
       if (!this.jimYes) {
         this.jimYes = [];

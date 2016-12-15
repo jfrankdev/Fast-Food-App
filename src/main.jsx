@@ -160,54 +160,57 @@ var Parent = React.createClass({
     },
 
       bkCall: function () {
-        Actions.bkVote();
         Actions.getMcdNo();
+	Actions.bkVote();
       },
 
       mcdCall: function () {
-        Actions.mcdVote();
         Actions.getBkNo();
+	Actions.mcdVote();
       },
 
       domCall: function () {
-        Actions.domVote();
         Actions.getPhutNo();
+	Actions.domVote();	
       },
 
       phutCall: function () {
-        Actions.phutVote();
         Actions.getDomNo();
+	 Actions.phutVote();
       },
 
       arbyCall: function () {
-        Actions.arbyVote();
         Actions.getWendNo();
+	Actions.arbyVote();
       },
 
       wendCall: function () {
-        Actions.wendVote();
         Actions.getArbyNo();
+	Actions.wendVote();
+
       },
 
       chicCall: function () {
-        Actions.chicVote();
         Actions.getKfcNo();
+	 Actions.chicVote();
+
       },
 
       kfcCall: function () {
-        Actions.kfcVote();
         Actions.getChicNo();
+	 Actions.kfcVote();
+
       },
 
       subCall: function () {
-        Actions.subVote();
         Actions.getJimNo();
+	 Actions.subVote();
+
       },
 
       jimCall: function () {
-        Actions.jimVote();
         Actions.getSubNo();
-
+	 Actions.jimVote();
       },
 
       render: function() {
@@ -320,8 +323,8 @@ var Parent = React.createClass({
           <LeftSwipe leftArrow={this.changeimgLeft} showArrow={this.state.hideLeftArrow}/>
           <RightSwipe rightArrow={this.changeimgRight} showRArrow={this.state.hideRightArrow}/>
           <RedoSwipe redoArrow={this.changeimgRedo} showRedoArrow={this.state.hideRedoArrow}/>
-        <img className={hide1} onClick={this.bkCall} src="../assets/img/burgerking.png" id="BurgerKing" alt="Burger King" height="394" width="440"></img>
-        <img className={hide2} onClick={this.mcdCall} src="../assets/img/mcdonalds.png" id="McDonalds" alt="McDonalds" height="394" width="440"></img>
+        <img className={hide1} onClick={this.bkCall} src="assets/img/burgerking.png" id="BurgerKing" alt="Burger King" height="394" width="440"></img>
+        <img className={hide2} onClick={this.mcdCall} src="assets/img/mcdonalds.png" id="McDonalds" alt="McDonalds" height="394" width="440"></img>
         <img className={hide3} onClick={this.domCall} src="assets/img/dominos.png" id="foodleft" alt="Dominos" height="394" width="440"></img>
         <img className={hide4} onClick={this.phutCall} src="assets/img/pizzahut.png" id="foodright" alt="Pizza Hut" height="394" width="440"></img>
         <img className={hide5} onClick={this.arbyCall} src="assets/img/arbys.png" id="foodleft" alt="Arbys" height="394" width="440"></img>

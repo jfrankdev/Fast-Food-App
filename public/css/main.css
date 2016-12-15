@@ -56,13 +56,11 @@
 }
 
 #mobiletext{
-  position: absolute;
- top: 15%;
-left: 15%;
- margin-top: -50px;
- margin-right: 250px;
+  position: relative;
+ top: 100px;
+ margin-right: 0px;
     text-align: center;
-   color: white;
+   color: black;
    font-family: Helvetica;
 font-size: 3.0vh;
    font-weight: 500;
@@ -89,7 +87,7 @@ p{
 
 h2{
   position: relative;
-  top: 460px;
+  top: 430px;
 }
 
 body {

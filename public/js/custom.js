@@ -29,6 +29,6 @@ $(function() {
 
     $('img').click(function(){
       $('h2').removeClass('visible');
-      setTimeout(delayFunc, 250);
+      setTimeout(delayFunc, 700);//results delay
     });
 });
