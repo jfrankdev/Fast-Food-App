@@ -5,10 +5,7 @@ var Actions = require('./reflux/actions.jsx');
 var VotesStore = require('./reflux/votes-store.jsx');
 var NoStore = require('./reflux/no-store.jsx');
 var classNames = require('classnames');
-
-
-
-
+//Yes votes component
 var YesVotes = React.createClass({
 
     render: function() {
@@ -20,7 +17,7 @@ var YesVotes = React.createClass({
       );
     }
  });
-
+ //No votes component
  var NoVotes = React.createClass({
 
      render: function() {
@@ -30,7 +27,7 @@ var YesVotes = React.createClass({
        );
      }
   });
-
+  //Left arrow swipe component
   var LeftSwipe = React.createClass({
       render: function() {
         var swipeClasses = classNames({
@@ -45,7 +42,7 @@ var YesVotes = React.createClass({
           );
       }
   });
-
+  //Right arrow swipe component
   var RightSwipe = React.createClass({
       render: function() {
         var rSwipeClasses = classNames({
@@ -60,7 +57,7 @@ var YesVotes = React.createClass({
           );
       }
   });
-
+  //Redo-refresh icon on last slide component
   var RedoSwipe = React.createClass({
       render: function() {
         var redoClasses = classNames({
@@ -75,8 +72,8 @@ var YesVotes = React.createClass({
           );
       }
   });
-
-var Parent = React.createClass({
+  //The master component where all other compenents get passed to via props or the render method
+  var Parent = React.createClass({
       mixins: [
     Reflux.listenTo(VotesStore, 'onChangeYes'),
     Reflux.listenTo(NoStore, 'onChangeNo')
@@ -105,8 +102,7 @@ var Parent = React.createClass({
       onChangeNo: function(event, data) {
       this.setState({voteNo: data});
       },
-
-
+      //Right arrow changes image slide logic
       changeimgRight: function () {
       this.setState({ hideLeftArrow: false });
         if(this.state.showImg1){
@@ -128,7 +124,7 @@ var Parent = React.createClass({
           this.setState({showImg5:true});
         }
     },
-
+      //Left arrow changes image slide logic
       changeimgLeft: function () {
         if(this.state.showImg5){
           this.setState({hideRedoArrow:true});
@@ -150,7 +146,7 @@ var Parent = React.createClass({
           this.setState({showImg1:true});
         }
     },
-
+    //Show redo-refresh icon on last slide
     changeimgRedo: function() {
           this.setState({hideRedoArrow:true});
           this.setState({showImg5:false});
@@ -158,59 +154,59 @@ var Parent = React.createClass({
           this.setState({hideLeftArrow:true});
           this.setState({hideRightArrow:false});
     },
-
+      //Ruflux data actions to get and recieve vote info
       bkCall: function () {
         Actions.getMcdNo();
-	Actions.bkVote();
+	      Actions.bkVote();
       },
 
       mcdCall: function () {
         Actions.getBkNo();
-	Actions.mcdVote();
+	      Actions.mcdVote();
       },
 
       domCall: function () {
         Actions.getPhutNo();
-	Actions.domVote();	
+	      Actions.domVote();
       },
 
       phutCall: function () {
         Actions.getDomNo();
-	 Actions.phutVote();
+	      Actions.phutVote();
       },
 
       arbyCall: function () {
         Actions.getWendNo();
-	Actions.arbyVote();
+	      Actions.arbyVote();
       },
 
       wendCall: function () {
         Actions.getArbyNo();
-	Actions.wendVote();
+	      Actions.wendVote();
 
       },
 
       chicCall: function () {
         Actions.getKfcNo();
-	 Actions.chicVote();
+	      Actions.chicVote();
 
       },
 
       kfcCall: function () {
         Actions.getChicNo();
-	 Actions.kfcVote();
+	      Actions.kfcVote();
 
       },
 
       subCall: function () {
         Actions.getJimNo();
-	 Actions.subVote();
+	      Actions.subVote();
 
       },
 
       jimCall: function () {
         Actions.getSubNo();
-	 Actions.jimVote();
+	      Actions.jimVote();
       },
 
       render: function() {
@@ -226,7 +222,6 @@ var Parent = React.createClass({
         var yes = this.state.voteYes.map(function(item) {
             return <YesVotes key={item.id} yes={item.vote} />;
         });
-
 
         var hide1 = classNames({
           'invisible': this.state.invisible,
@@ -318,7 +313,6 @@ var Parent = React.createClass({
           'foodright': true
           });
 
-
       return ( <div>
           <LeftSwipe leftArrow={this.changeimgLeft} showArrow={this.state.hideLeftArrow}/>
           <RightSwipe rightArrow={this.changeimgRight} showRArrow={this.state.hideRightArrow}/>
@@ -342,7 +336,6 @@ var Parent = React.createClass({
     }
 
 });
-
 
 ReactDOM.render(<div>
   <Parent />
